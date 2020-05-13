@@ -114,6 +114,14 @@ class FloatNum(Node):
     def __repr__(self):
         return self.__str__()
 
+class Numbers(Node):
+    def __init__(self, value):
+        self.value = value
+    def __str__(self):
+        return f"Numbers({self.value})"
+    def __repr__(self):
+        return self.__str__()
+
 class String(Node):
     def __init__(self, value):
         self.value = value

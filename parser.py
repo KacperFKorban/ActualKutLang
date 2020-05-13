@@ -199,16 +199,24 @@ def p_expression_cond(p):
         op = BinOperator.LTEQ
     p[0] = BinOperation(p[1], op, p[3])
 
-def p_expression_function(p):
-    """expression : ZEROS '(' expressions ')'
-                  | ONES '(' expressions ')'
-                  | EYE '(' expressions ')'"""
-    if p[1] == 'zeros':
-        p[0] = Zeros(Expressions(p[3]))
-    elif p[1] == 'ones':
-        p[0] = Ones(Expressions(p[3]))
+def p_numbers(p):
+    """numbers : number
+               | numbers ',' number"""
+    if len(p) > 2:
+        p[0] = p[1] + [p[3]]
     else:
-        p[0] = Eye(Expressions(p[3]))
+        p[0] = [p[1]]
+
+def p_expression_function(p):
+    """expression : ZEROS '(' numbers ')'
+                  | ONES '(' numbers ')'
+                  | EYE '(' numbers ')'"""
+    if p[1] == 'zeros':
+        p[0] = Zeros(Numbers(p[3]))
+    elif p[1] == 'ones':
+        p[0] = Ones(Numbers(p[3]))
+    else:
+        p[0] = Eye(Numbers(p[3]))
 
 def p_expression_number(p):
     """expression : number"""

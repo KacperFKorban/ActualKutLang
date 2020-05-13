@@ -108,6 +108,11 @@ class TreePrinter:
         self.printIndent(indent)
         print(self.value)
 
+    @addToClass(AST.Numbers)
+    def printTree(self, indent=0):
+        for n in self.value:
+            n.printTree(indent)
+
     @addToClass(AST.String)
     def printTree(self, indent=0):
         self.printIndent(indent)

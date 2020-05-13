@@ -2,6 +2,7 @@ import sys
 import scanner
 import parser
 from TreePrinter import TreePrinter
+from TypeChecker import TypeChecker
 
 if __name__ == '__main__':
 
@@ -15,5 +16,9 @@ if __name__ == '__main__':
     parser = parser.parser
     text = file.read()
     ast = parser.parse(text, lexer=scanner.lexer)
-    if ast is not None:
-        ast.printTree()
+    # if ast is not None:
+    #     ast.printTree()
+    #     print()
+    
+    typeChecker = TypeChecker()   
+    typeChecker.visit(ast)

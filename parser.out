@@ -54,38 +54,40 @@ Rule 44    expression -> expression GT expression
 Rule 45    expression -> expression LT expression
 Rule 46    expression -> expression GTEQ expression
 Rule 47    expression -> expression LTEQ expression
-Rule 48    expression -> ZEROS ( expressions )
-Rule 49    expression -> ONES ( expressions )
-Rule 50    expression -> EYE ( expressions )
-Rule 51    expression -> number
-Rule 52    expression -> STRING
-Rule 53    expression -> assignable
-Rule 54    assignable -> ID
-Rule 55    assignable -> matrixcellgetter
-Rule 56    matrixcellgetter -> ID [ INTNUM , INTNUM ]
-Rule 57    expression -> ( expression )
-Rule 58    expression -> BREAK
-Rule 59    expression -> CONTINUE
-Rule 60    expression -> range
-Rule 61    range -> expression : expression
+Rule 48    numbers -> number
+Rule 49    numbers -> numbers , number
+Rule 50    expression -> ZEROS ( numbers )
+Rule 51    expression -> ONES ( numbers )
+Rule 52    expression -> EYE ( numbers )
+Rule 53    expression -> number
+Rule 54    expression -> STRING
+Rule 55    expression -> assignable
+Rule 56    assignable -> ID
+Rule 57    assignable -> matrixcellgetter
+Rule 58    matrixcellgetter -> ID [ INTNUM , INTNUM ]
+Rule 59    expression -> ( expression )
+Rule 60    expression -> BREAK
+Rule 61    expression -> CONTINUE
+Rule 62    expression -> range
+Rule 63    range -> expression : expression
 
 Terminals, with rules where they appear
 
 '                    : 29
-(                    : 3 4 5 48 49 50 57
-)                    : 3 4 5 48 49 50 57
+(                    : 3 4 5 50 51 52 59
+)                    : 3 4 5 50 51 52 59
 *                    : 38
 +                    : 34
-,                    : 14 19 22 24 56
+,                    : 14 19 22 24 49 58
 -                    : 28 35
 /                    : 39
-:                    : 61
+:                    : 63
 ;                    : 10 12 17 21
 =                    : 7 27
 ADDASSIGN            : 30
-BREAK                : 58
+BREAK                : 60
 COMMENT              : 
-CONTINUE             : 59
+CONTINUE             : 61
 DIVASSIGN            : 33
 DOTADD               : 36
 DOTDIV               : 41
@@ -93,42 +95,43 @@ DOTMUL               : 40
 DOTSUB               : 37
 ELSE                 : 4
 EQ                   : 42
-EYE                  : 50
+EYE                  : 52
 FLOATNUM             : 26
 FOR                  : 7
 GT                   : 44
 GTEQ                 : 46
-ID                   : 7 54 56
+ID                   : 7 56 58
 IF                   : 3 4
-INTNUM               : 25 56 56
+INTNUM               : 25 58 58
 LT                   : 45
 LTEQ                 : 47
 MULASSIGN            : 32
 NOTEQ                : 43
-ONES                 : 49
+ONES                 : 51
 PRINT                : 12
 RETURN               : 6
-STRING               : 52
+STRING               : 54
 SUBASSIGN            : 31
 WHILE                : 5
-ZEROS                : 48
-[                    : 15 16 19 20 22 56
-]                    : 15 16 19 20 22 56
+ZEROS                : 50
+[                    : 15 16 19 20 22 58
+]                    : 15 16 19 20 22 58
 error                : 
 {                    : 11
 }                    : 11
 
 Nonterminals, with rules where they appear
 
-assignable           : 27 30 31 32 33 53
-expression           : 3 4 5 6 10 13 14 27 28 29 30 31 32 33 34 34 35 35 36 36 37 37 38 38 39 39 40 40 41 41 42 42 43 43 44 44 45 45 46 46 47 47 57 61 61
-expressions          : 12 14 48 49 50
+assignable           : 27 30 31 32 33 55
+expression           : 3 4 5 6 10 13 14 27 28 29 30 31 32 33 34 34 35 35 36 36 37 37 38 38 39 39 40 40 41 41 42 42 43 43 44 44 45 45 46 46 47 47 59 63 63
+expressions          : 12 14
 instruction          : 2
-matrixcellgetter     : 55
+matrixcellgetter     : 57
 minit                : 15 21 22
 mrow                 : 17 18 19 20 21 22 24
-number               : 23 24 51
-range                : 7 60
+number               : 23 24 48 49 53
+numbers              : 49 50 51 52
+range                : 7 62
 start                : 0
 statement            : 3 4 4 5 7 8 9
 statements           : 1 9 11
@@ -173,22 +176,22 @@ state 0
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     {               shift and go to state 6
     PRINT           shift and go to state 7
@@ -261,22 +264,22 @@ state 2
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     $end            reduce using rule 1 (start -> statements .)
     {               shift and go to state 6
@@ -377,7 +380,7 @@ state 5
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               shift and go to state 29
     '               shift and go to state 30
@@ -435,22 +438,22 @@ state 6
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     {               shift and go to state 6
     PRINT           shift and go to state 7
@@ -509,22 +512,22 @@ state 7
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -557,7 +560,7 @@ state 8
 
 state 9
 
-    (57) expression -> ( . expression )
+    (59) expression -> ( . expression )
     (6) expression -> . RETURN expression
     (15) expression -> . [ minit ]
     (16) expression -> . [ ]
@@ -582,22 +585,22 @@ state 9
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -635,95 +638,95 @@ state 11
 
 state 12
 
-    (54) assignable -> ID .
-    (56) matrixcellgetter -> ID . [ INTNUM , INTNUM ]
+    (56) assignable -> ID .
+    (58) matrixcellgetter -> ID . [ INTNUM , INTNUM ]
 
   ! shift/reduce conflict for [ resolved as shift
-    =               reduce using rule 54 (assignable -> ID .)
-    ADDASSIGN       reduce using rule 54 (assignable -> ID .)
-    SUBASSIGN       reduce using rule 54 (assignable -> ID .)
-    MULASSIGN       reduce using rule 54 (assignable -> ID .)
-    DIVASSIGN       reduce using rule 54 (assignable -> ID .)
-    ;               reduce using rule 54 (assignable -> ID .)
-    '               reduce using rule 54 (assignable -> ID .)
-    +               reduce using rule 54 (assignable -> ID .)
-    -               reduce using rule 54 (assignable -> ID .)
-    DOTADD          reduce using rule 54 (assignable -> ID .)
-    DOTSUB          reduce using rule 54 (assignable -> ID .)
-    *               reduce using rule 54 (assignable -> ID .)
-    /               reduce using rule 54 (assignable -> ID .)
-    DOTMUL          reduce using rule 54 (assignable -> ID .)
-    DOTDIV          reduce using rule 54 (assignable -> ID .)
-    EQ              reduce using rule 54 (assignable -> ID .)
-    NOTEQ           reduce using rule 54 (assignable -> ID .)
-    GT              reduce using rule 54 (assignable -> ID .)
-    LT              reduce using rule 54 (assignable -> ID .)
-    GTEQ            reduce using rule 54 (assignable -> ID .)
-    LTEQ            reduce using rule 54 (assignable -> ID .)
-    :               reduce using rule 54 (assignable -> ID .)
-    ,               reduce using rule 54 (assignable -> ID .)
-    )               reduce using rule 54 (assignable -> ID .)
-    {               reduce using rule 54 (assignable -> ID .)
-    PRINT           reduce using rule 54 (assignable -> ID .)
-    IF              reduce using rule 54 (assignable -> ID .)
-    WHILE           reduce using rule 54 (assignable -> ID .)
-    FOR             reduce using rule 54 (assignable -> ID .)
-    RETURN          reduce using rule 54 (assignable -> ID .)
-    ZEROS           reduce using rule 54 (assignable -> ID .)
-    ONES            reduce using rule 54 (assignable -> ID .)
-    EYE             reduce using rule 54 (assignable -> ID .)
-    STRING          reduce using rule 54 (assignable -> ID .)
-    (               reduce using rule 54 (assignable -> ID .)
-    BREAK           reduce using rule 54 (assignable -> ID .)
-    CONTINUE        reduce using rule 54 (assignable -> ID .)
-    ID              reduce using rule 54 (assignable -> ID .)
-    INTNUM          reduce using rule 54 (assignable -> ID .)
-    FLOATNUM        reduce using rule 54 (assignable -> ID .)
+    =               reduce using rule 56 (assignable -> ID .)
+    ADDASSIGN       reduce using rule 56 (assignable -> ID .)
+    SUBASSIGN       reduce using rule 56 (assignable -> ID .)
+    MULASSIGN       reduce using rule 56 (assignable -> ID .)
+    DIVASSIGN       reduce using rule 56 (assignable -> ID .)
+    ;               reduce using rule 56 (assignable -> ID .)
+    '               reduce using rule 56 (assignable -> ID .)
+    +               reduce using rule 56 (assignable -> ID .)
+    -               reduce using rule 56 (assignable -> ID .)
+    DOTADD          reduce using rule 56 (assignable -> ID .)
+    DOTSUB          reduce using rule 56 (assignable -> ID .)
+    *               reduce using rule 56 (assignable -> ID .)
+    /               reduce using rule 56 (assignable -> ID .)
+    DOTMUL          reduce using rule 56 (assignable -> ID .)
+    DOTDIV          reduce using rule 56 (assignable -> ID .)
+    EQ              reduce using rule 56 (assignable -> ID .)
+    NOTEQ           reduce using rule 56 (assignable -> ID .)
+    GT              reduce using rule 56 (assignable -> ID .)
+    LT              reduce using rule 56 (assignable -> ID .)
+    GTEQ            reduce using rule 56 (assignable -> ID .)
+    LTEQ            reduce using rule 56 (assignable -> ID .)
+    :               reduce using rule 56 (assignable -> ID .)
+    ,               reduce using rule 56 (assignable -> ID .)
+    )               reduce using rule 56 (assignable -> ID .)
+    {               reduce using rule 56 (assignable -> ID .)
+    PRINT           reduce using rule 56 (assignable -> ID .)
+    IF              reduce using rule 56 (assignable -> ID .)
+    WHILE           reduce using rule 56 (assignable -> ID .)
+    FOR             reduce using rule 56 (assignable -> ID .)
+    RETURN          reduce using rule 56 (assignable -> ID .)
+    ZEROS           reduce using rule 56 (assignable -> ID .)
+    ONES            reduce using rule 56 (assignable -> ID .)
+    EYE             reduce using rule 56 (assignable -> ID .)
+    STRING          reduce using rule 56 (assignable -> ID .)
+    (               reduce using rule 56 (assignable -> ID .)
+    BREAK           reduce using rule 56 (assignable -> ID .)
+    CONTINUE        reduce using rule 56 (assignable -> ID .)
+    ID              reduce using rule 56 (assignable -> ID .)
+    INTNUM          reduce using rule 56 (assignable -> ID .)
+    FLOATNUM        reduce using rule 56 (assignable -> ID .)
     [               shift and go to state 53
 
-  ! [               [ reduce using rule 54 (assignable -> ID .) ]
+  ! [               [ reduce using rule 56 (assignable -> ID .) ]
 
 
 state 13
 
-    (60) expression -> range .
+    (62) expression -> range .
 
-    ;               reduce using rule 60 (expression -> range .)
-    '               reduce using rule 60 (expression -> range .)
-    +               reduce using rule 60 (expression -> range .)
-    -               reduce using rule 60 (expression -> range .)
-    DOTADD          reduce using rule 60 (expression -> range .)
-    DOTSUB          reduce using rule 60 (expression -> range .)
-    *               reduce using rule 60 (expression -> range .)
-    /               reduce using rule 60 (expression -> range .)
-    DOTMUL          reduce using rule 60 (expression -> range .)
-    DOTDIV          reduce using rule 60 (expression -> range .)
-    EQ              reduce using rule 60 (expression -> range .)
-    NOTEQ           reduce using rule 60 (expression -> range .)
-    GT              reduce using rule 60 (expression -> range .)
-    LT              reduce using rule 60 (expression -> range .)
-    GTEQ            reduce using rule 60 (expression -> range .)
-    LTEQ            reduce using rule 60 (expression -> range .)
-    :               reduce using rule 60 (expression -> range .)
-    ,               reduce using rule 60 (expression -> range .)
-    )               reduce using rule 60 (expression -> range .)
-    {               reduce using rule 60 (expression -> range .)
-    PRINT           reduce using rule 60 (expression -> range .)
-    IF              reduce using rule 60 (expression -> range .)
-    WHILE           reduce using rule 60 (expression -> range .)
-    FOR             reduce using rule 60 (expression -> range .)
-    RETURN          reduce using rule 60 (expression -> range .)
-    [               reduce using rule 60 (expression -> range .)
-    ZEROS           reduce using rule 60 (expression -> range .)
-    ONES            reduce using rule 60 (expression -> range .)
-    EYE             reduce using rule 60 (expression -> range .)
-    STRING          reduce using rule 60 (expression -> range .)
-    (               reduce using rule 60 (expression -> range .)
-    BREAK           reduce using rule 60 (expression -> range .)
-    CONTINUE        reduce using rule 60 (expression -> range .)
-    ID              reduce using rule 60 (expression -> range .)
-    INTNUM          reduce using rule 60 (expression -> range .)
-    FLOATNUM        reduce using rule 60 (expression -> range .)
+    ;               reduce using rule 62 (expression -> range .)
+    '               reduce using rule 62 (expression -> range .)
+    +               reduce using rule 62 (expression -> range .)
+    -               reduce using rule 62 (expression -> range .)
+    DOTADD          reduce using rule 62 (expression -> range .)
+    DOTSUB          reduce using rule 62 (expression -> range .)
+    *               reduce using rule 62 (expression -> range .)
+    /               reduce using rule 62 (expression -> range .)
+    DOTMUL          reduce using rule 62 (expression -> range .)
+    DOTDIV          reduce using rule 62 (expression -> range .)
+    EQ              reduce using rule 62 (expression -> range .)
+    NOTEQ           reduce using rule 62 (expression -> range .)
+    GT              reduce using rule 62 (expression -> range .)
+    LT              reduce using rule 62 (expression -> range .)
+    GTEQ            reduce using rule 62 (expression -> range .)
+    LTEQ            reduce using rule 62 (expression -> range .)
+    :               reduce using rule 62 (expression -> range .)
+    ,               reduce using rule 62 (expression -> range .)
+    )               reduce using rule 62 (expression -> range .)
+    {               reduce using rule 62 (expression -> range .)
+    PRINT           reduce using rule 62 (expression -> range .)
+    IF              reduce using rule 62 (expression -> range .)
+    WHILE           reduce using rule 62 (expression -> range .)
+    FOR             reduce using rule 62 (expression -> range .)
+    RETURN          reduce using rule 62 (expression -> range .)
+    [               reduce using rule 62 (expression -> range .)
+    ZEROS           reduce using rule 62 (expression -> range .)
+    ONES            reduce using rule 62 (expression -> range .)
+    EYE             reduce using rule 62 (expression -> range .)
+    STRING          reduce using rule 62 (expression -> range .)
+    (               reduce using rule 62 (expression -> range .)
+    BREAK           reduce using rule 62 (expression -> range .)
+    CONTINUE        reduce using rule 62 (expression -> range .)
+    ID              reduce using rule 62 (expression -> range .)
+    INTNUM          reduce using rule 62 (expression -> range .)
+    FLOATNUM        reduce using rule 62 (expression -> range .)
 
 
 state 14
@@ -753,22 +756,22 @@ state 14
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -821,49 +824,49 @@ state 16
     (31) expression -> assignable . SUBASSIGN expression
     (32) expression -> assignable . MULASSIGN expression
     (33) expression -> assignable . DIVASSIGN expression
-    (53) expression -> assignable .
+    (55) expression -> assignable .
 
     =               shift and go to state 60
     ADDASSIGN       shift and go to state 61
     SUBASSIGN       shift and go to state 62
     MULASSIGN       shift and go to state 63
     DIVASSIGN       shift and go to state 64
-    ;               reduce using rule 53 (expression -> assignable .)
-    '               reduce using rule 53 (expression -> assignable .)
-    +               reduce using rule 53 (expression -> assignable .)
-    -               reduce using rule 53 (expression -> assignable .)
-    DOTADD          reduce using rule 53 (expression -> assignable .)
-    DOTSUB          reduce using rule 53 (expression -> assignable .)
-    *               reduce using rule 53 (expression -> assignable .)
-    /               reduce using rule 53 (expression -> assignable .)
-    DOTMUL          reduce using rule 53 (expression -> assignable .)
-    DOTDIV          reduce using rule 53 (expression -> assignable .)
-    EQ              reduce using rule 53 (expression -> assignable .)
-    NOTEQ           reduce using rule 53 (expression -> assignable .)
-    GT              reduce using rule 53 (expression -> assignable .)
-    LT              reduce using rule 53 (expression -> assignable .)
-    GTEQ            reduce using rule 53 (expression -> assignable .)
-    LTEQ            reduce using rule 53 (expression -> assignable .)
-    :               reduce using rule 53 (expression -> assignable .)
-    ,               reduce using rule 53 (expression -> assignable .)
-    )               reduce using rule 53 (expression -> assignable .)
-    {               reduce using rule 53 (expression -> assignable .)
-    PRINT           reduce using rule 53 (expression -> assignable .)
-    IF              reduce using rule 53 (expression -> assignable .)
-    WHILE           reduce using rule 53 (expression -> assignable .)
-    FOR             reduce using rule 53 (expression -> assignable .)
-    RETURN          reduce using rule 53 (expression -> assignable .)
-    [               reduce using rule 53 (expression -> assignable .)
-    ZEROS           reduce using rule 53 (expression -> assignable .)
-    ONES            reduce using rule 53 (expression -> assignable .)
-    EYE             reduce using rule 53 (expression -> assignable .)
-    STRING          reduce using rule 53 (expression -> assignable .)
-    (               reduce using rule 53 (expression -> assignable .)
-    BREAK           reduce using rule 53 (expression -> assignable .)
-    CONTINUE        reduce using rule 53 (expression -> assignable .)
-    ID              reduce using rule 53 (expression -> assignable .)
-    INTNUM          reduce using rule 53 (expression -> assignable .)
-    FLOATNUM        reduce using rule 53 (expression -> assignable .)
+    ;               reduce using rule 55 (expression -> assignable .)
+    '               reduce using rule 55 (expression -> assignable .)
+    +               reduce using rule 55 (expression -> assignable .)
+    -               reduce using rule 55 (expression -> assignable .)
+    DOTADD          reduce using rule 55 (expression -> assignable .)
+    DOTSUB          reduce using rule 55 (expression -> assignable .)
+    *               reduce using rule 55 (expression -> assignable .)
+    /               reduce using rule 55 (expression -> assignable .)
+    DOTMUL          reduce using rule 55 (expression -> assignable .)
+    DOTDIV          reduce using rule 55 (expression -> assignable .)
+    EQ              reduce using rule 55 (expression -> assignable .)
+    NOTEQ           reduce using rule 55 (expression -> assignable .)
+    GT              reduce using rule 55 (expression -> assignable .)
+    LT              reduce using rule 55 (expression -> assignable .)
+    GTEQ            reduce using rule 55 (expression -> assignable .)
+    LTEQ            reduce using rule 55 (expression -> assignable .)
+    :               reduce using rule 55 (expression -> assignable .)
+    ,               reduce using rule 55 (expression -> assignable .)
+    )               reduce using rule 55 (expression -> assignable .)
+    {               reduce using rule 55 (expression -> assignable .)
+    PRINT           reduce using rule 55 (expression -> assignable .)
+    IF              reduce using rule 55 (expression -> assignable .)
+    WHILE           reduce using rule 55 (expression -> assignable .)
+    FOR             reduce using rule 55 (expression -> assignable .)
+    RETURN          reduce using rule 55 (expression -> assignable .)
+    [               reduce using rule 55 (expression -> assignable .)
+    ZEROS           reduce using rule 55 (expression -> assignable .)
+    ONES            reduce using rule 55 (expression -> assignable .)
+    EYE             reduce using rule 55 (expression -> assignable .)
+    STRING          reduce using rule 55 (expression -> assignable .)
+    (               reduce using rule 55 (expression -> assignable .)
+    BREAK           reduce using rule 55 (expression -> assignable .)
+    CONTINUE        reduce using rule 55 (expression -> assignable .)
+    ID              reduce using rule 55 (expression -> assignable .)
+    INTNUM          reduce using rule 55 (expression -> assignable .)
+    FLOATNUM        reduce using rule 55 (expression -> assignable .)
 
 
 state 17
@@ -893,22 +896,22 @@ state 17
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -932,238 +935,238 @@ state 17
 
 state 18
 
-    (48) expression -> ZEROS . ( expressions )
+    (50) expression -> ZEROS . ( numbers )
 
     (               shift and go to state 66
 
 
 state 19
 
-    (49) expression -> ONES . ( expressions )
+    (51) expression -> ONES . ( numbers )
 
     (               shift and go to state 67
 
 
 state 20
 
-    (50) expression -> EYE . ( expressions )
+    (52) expression -> EYE . ( numbers )
 
     (               shift and go to state 68
 
 
 state 21
 
-    (51) expression -> number .
+    (53) expression -> number .
 
-    ;               reduce using rule 51 (expression -> number .)
-    '               reduce using rule 51 (expression -> number .)
-    +               reduce using rule 51 (expression -> number .)
-    -               reduce using rule 51 (expression -> number .)
-    DOTADD          reduce using rule 51 (expression -> number .)
-    DOTSUB          reduce using rule 51 (expression -> number .)
-    *               reduce using rule 51 (expression -> number .)
-    /               reduce using rule 51 (expression -> number .)
-    DOTMUL          reduce using rule 51 (expression -> number .)
-    DOTDIV          reduce using rule 51 (expression -> number .)
-    EQ              reduce using rule 51 (expression -> number .)
-    NOTEQ           reduce using rule 51 (expression -> number .)
-    GT              reduce using rule 51 (expression -> number .)
-    LT              reduce using rule 51 (expression -> number .)
-    GTEQ            reduce using rule 51 (expression -> number .)
-    LTEQ            reduce using rule 51 (expression -> number .)
-    :               reduce using rule 51 (expression -> number .)
-    ,               reduce using rule 51 (expression -> number .)
-    )               reduce using rule 51 (expression -> number .)
-    {               reduce using rule 51 (expression -> number .)
-    PRINT           reduce using rule 51 (expression -> number .)
-    IF              reduce using rule 51 (expression -> number .)
-    WHILE           reduce using rule 51 (expression -> number .)
-    FOR             reduce using rule 51 (expression -> number .)
-    RETURN          reduce using rule 51 (expression -> number .)
-    [               reduce using rule 51 (expression -> number .)
-    ZEROS           reduce using rule 51 (expression -> number .)
-    ONES            reduce using rule 51 (expression -> number .)
-    EYE             reduce using rule 51 (expression -> number .)
-    STRING          reduce using rule 51 (expression -> number .)
-    (               reduce using rule 51 (expression -> number .)
-    BREAK           reduce using rule 51 (expression -> number .)
-    CONTINUE        reduce using rule 51 (expression -> number .)
-    ID              reduce using rule 51 (expression -> number .)
-    INTNUM          reduce using rule 51 (expression -> number .)
-    FLOATNUM        reduce using rule 51 (expression -> number .)
+    ;               reduce using rule 53 (expression -> number .)
+    '               reduce using rule 53 (expression -> number .)
+    +               reduce using rule 53 (expression -> number .)
+    -               reduce using rule 53 (expression -> number .)
+    DOTADD          reduce using rule 53 (expression -> number .)
+    DOTSUB          reduce using rule 53 (expression -> number .)
+    *               reduce using rule 53 (expression -> number .)
+    /               reduce using rule 53 (expression -> number .)
+    DOTMUL          reduce using rule 53 (expression -> number .)
+    DOTDIV          reduce using rule 53 (expression -> number .)
+    EQ              reduce using rule 53 (expression -> number .)
+    NOTEQ           reduce using rule 53 (expression -> number .)
+    GT              reduce using rule 53 (expression -> number .)
+    LT              reduce using rule 53 (expression -> number .)
+    GTEQ            reduce using rule 53 (expression -> number .)
+    LTEQ            reduce using rule 53 (expression -> number .)
+    :               reduce using rule 53 (expression -> number .)
+    ,               reduce using rule 53 (expression -> number .)
+    )               reduce using rule 53 (expression -> number .)
+    {               reduce using rule 53 (expression -> number .)
+    PRINT           reduce using rule 53 (expression -> number .)
+    IF              reduce using rule 53 (expression -> number .)
+    WHILE           reduce using rule 53 (expression -> number .)
+    FOR             reduce using rule 53 (expression -> number .)
+    RETURN          reduce using rule 53 (expression -> number .)
+    [               reduce using rule 53 (expression -> number .)
+    ZEROS           reduce using rule 53 (expression -> number .)
+    ONES            reduce using rule 53 (expression -> number .)
+    EYE             reduce using rule 53 (expression -> number .)
+    STRING          reduce using rule 53 (expression -> number .)
+    (               reduce using rule 53 (expression -> number .)
+    BREAK           reduce using rule 53 (expression -> number .)
+    CONTINUE        reduce using rule 53 (expression -> number .)
+    ID              reduce using rule 53 (expression -> number .)
+    INTNUM          reduce using rule 53 (expression -> number .)
+    FLOATNUM        reduce using rule 53 (expression -> number .)
 
 
 state 22
 
-    (52) expression -> STRING .
+    (54) expression -> STRING .
 
-    ;               reduce using rule 52 (expression -> STRING .)
-    '               reduce using rule 52 (expression -> STRING .)
-    +               reduce using rule 52 (expression -> STRING .)
-    -               reduce using rule 52 (expression -> STRING .)
-    DOTADD          reduce using rule 52 (expression -> STRING .)
-    DOTSUB          reduce using rule 52 (expression -> STRING .)
-    *               reduce using rule 52 (expression -> STRING .)
-    /               reduce using rule 52 (expression -> STRING .)
-    DOTMUL          reduce using rule 52 (expression -> STRING .)
-    DOTDIV          reduce using rule 52 (expression -> STRING .)
-    EQ              reduce using rule 52 (expression -> STRING .)
-    NOTEQ           reduce using rule 52 (expression -> STRING .)
-    GT              reduce using rule 52 (expression -> STRING .)
-    LT              reduce using rule 52 (expression -> STRING .)
-    GTEQ            reduce using rule 52 (expression -> STRING .)
-    LTEQ            reduce using rule 52 (expression -> STRING .)
-    :               reduce using rule 52 (expression -> STRING .)
-    ,               reduce using rule 52 (expression -> STRING .)
-    )               reduce using rule 52 (expression -> STRING .)
-    {               reduce using rule 52 (expression -> STRING .)
-    PRINT           reduce using rule 52 (expression -> STRING .)
-    IF              reduce using rule 52 (expression -> STRING .)
-    WHILE           reduce using rule 52 (expression -> STRING .)
-    FOR             reduce using rule 52 (expression -> STRING .)
-    RETURN          reduce using rule 52 (expression -> STRING .)
-    [               reduce using rule 52 (expression -> STRING .)
-    ZEROS           reduce using rule 52 (expression -> STRING .)
-    ONES            reduce using rule 52 (expression -> STRING .)
-    EYE             reduce using rule 52 (expression -> STRING .)
-    STRING          reduce using rule 52 (expression -> STRING .)
-    (               reduce using rule 52 (expression -> STRING .)
-    BREAK           reduce using rule 52 (expression -> STRING .)
-    CONTINUE        reduce using rule 52 (expression -> STRING .)
-    ID              reduce using rule 52 (expression -> STRING .)
-    INTNUM          reduce using rule 52 (expression -> STRING .)
-    FLOATNUM        reduce using rule 52 (expression -> STRING .)
+    ;               reduce using rule 54 (expression -> STRING .)
+    '               reduce using rule 54 (expression -> STRING .)
+    +               reduce using rule 54 (expression -> STRING .)
+    -               reduce using rule 54 (expression -> STRING .)
+    DOTADD          reduce using rule 54 (expression -> STRING .)
+    DOTSUB          reduce using rule 54 (expression -> STRING .)
+    *               reduce using rule 54 (expression -> STRING .)
+    /               reduce using rule 54 (expression -> STRING .)
+    DOTMUL          reduce using rule 54 (expression -> STRING .)
+    DOTDIV          reduce using rule 54 (expression -> STRING .)
+    EQ              reduce using rule 54 (expression -> STRING .)
+    NOTEQ           reduce using rule 54 (expression -> STRING .)
+    GT              reduce using rule 54 (expression -> STRING .)
+    LT              reduce using rule 54 (expression -> STRING .)
+    GTEQ            reduce using rule 54 (expression -> STRING .)
+    LTEQ            reduce using rule 54 (expression -> STRING .)
+    :               reduce using rule 54 (expression -> STRING .)
+    ,               reduce using rule 54 (expression -> STRING .)
+    )               reduce using rule 54 (expression -> STRING .)
+    {               reduce using rule 54 (expression -> STRING .)
+    PRINT           reduce using rule 54 (expression -> STRING .)
+    IF              reduce using rule 54 (expression -> STRING .)
+    WHILE           reduce using rule 54 (expression -> STRING .)
+    FOR             reduce using rule 54 (expression -> STRING .)
+    RETURN          reduce using rule 54 (expression -> STRING .)
+    [               reduce using rule 54 (expression -> STRING .)
+    ZEROS           reduce using rule 54 (expression -> STRING .)
+    ONES            reduce using rule 54 (expression -> STRING .)
+    EYE             reduce using rule 54 (expression -> STRING .)
+    STRING          reduce using rule 54 (expression -> STRING .)
+    (               reduce using rule 54 (expression -> STRING .)
+    BREAK           reduce using rule 54 (expression -> STRING .)
+    CONTINUE        reduce using rule 54 (expression -> STRING .)
+    ID              reduce using rule 54 (expression -> STRING .)
+    INTNUM          reduce using rule 54 (expression -> STRING .)
+    FLOATNUM        reduce using rule 54 (expression -> STRING .)
 
 
 state 23
 
-    (58) expression -> BREAK .
+    (60) expression -> BREAK .
 
-    ;               reduce using rule 58 (expression -> BREAK .)
-    '               reduce using rule 58 (expression -> BREAK .)
-    +               reduce using rule 58 (expression -> BREAK .)
-    -               reduce using rule 58 (expression -> BREAK .)
-    DOTADD          reduce using rule 58 (expression -> BREAK .)
-    DOTSUB          reduce using rule 58 (expression -> BREAK .)
-    *               reduce using rule 58 (expression -> BREAK .)
-    /               reduce using rule 58 (expression -> BREAK .)
-    DOTMUL          reduce using rule 58 (expression -> BREAK .)
-    DOTDIV          reduce using rule 58 (expression -> BREAK .)
-    EQ              reduce using rule 58 (expression -> BREAK .)
-    NOTEQ           reduce using rule 58 (expression -> BREAK .)
-    GT              reduce using rule 58 (expression -> BREAK .)
-    LT              reduce using rule 58 (expression -> BREAK .)
-    GTEQ            reduce using rule 58 (expression -> BREAK .)
-    LTEQ            reduce using rule 58 (expression -> BREAK .)
-    :               reduce using rule 58 (expression -> BREAK .)
-    ,               reduce using rule 58 (expression -> BREAK .)
-    )               reduce using rule 58 (expression -> BREAK .)
-    {               reduce using rule 58 (expression -> BREAK .)
-    PRINT           reduce using rule 58 (expression -> BREAK .)
-    IF              reduce using rule 58 (expression -> BREAK .)
-    WHILE           reduce using rule 58 (expression -> BREAK .)
-    FOR             reduce using rule 58 (expression -> BREAK .)
-    RETURN          reduce using rule 58 (expression -> BREAK .)
-    [               reduce using rule 58 (expression -> BREAK .)
-    ZEROS           reduce using rule 58 (expression -> BREAK .)
-    ONES            reduce using rule 58 (expression -> BREAK .)
-    EYE             reduce using rule 58 (expression -> BREAK .)
-    STRING          reduce using rule 58 (expression -> BREAK .)
-    (               reduce using rule 58 (expression -> BREAK .)
-    BREAK           reduce using rule 58 (expression -> BREAK .)
-    CONTINUE        reduce using rule 58 (expression -> BREAK .)
-    ID              reduce using rule 58 (expression -> BREAK .)
-    INTNUM          reduce using rule 58 (expression -> BREAK .)
-    FLOATNUM        reduce using rule 58 (expression -> BREAK .)
+    ;               reduce using rule 60 (expression -> BREAK .)
+    '               reduce using rule 60 (expression -> BREAK .)
+    +               reduce using rule 60 (expression -> BREAK .)
+    -               reduce using rule 60 (expression -> BREAK .)
+    DOTADD          reduce using rule 60 (expression -> BREAK .)
+    DOTSUB          reduce using rule 60 (expression -> BREAK .)
+    *               reduce using rule 60 (expression -> BREAK .)
+    /               reduce using rule 60 (expression -> BREAK .)
+    DOTMUL          reduce using rule 60 (expression -> BREAK .)
+    DOTDIV          reduce using rule 60 (expression -> BREAK .)
+    EQ              reduce using rule 60 (expression -> BREAK .)
+    NOTEQ           reduce using rule 60 (expression -> BREAK .)
+    GT              reduce using rule 60 (expression -> BREAK .)
+    LT              reduce using rule 60 (expression -> BREAK .)
+    GTEQ            reduce using rule 60 (expression -> BREAK .)
+    LTEQ            reduce using rule 60 (expression -> BREAK .)
+    :               reduce using rule 60 (expression -> BREAK .)
+    ,               reduce using rule 60 (expression -> BREAK .)
+    )               reduce using rule 60 (expression -> BREAK .)
+    {               reduce using rule 60 (expression -> BREAK .)
+    PRINT           reduce using rule 60 (expression -> BREAK .)
+    IF              reduce using rule 60 (expression -> BREAK .)
+    WHILE           reduce using rule 60 (expression -> BREAK .)
+    FOR             reduce using rule 60 (expression -> BREAK .)
+    RETURN          reduce using rule 60 (expression -> BREAK .)
+    [               reduce using rule 60 (expression -> BREAK .)
+    ZEROS           reduce using rule 60 (expression -> BREAK .)
+    ONES            reduce using rule 60 (expression -> BREAK .)
+    EYE             reduce using rule 60 (expression -> BREAK .)
+    STRING          reduce using rule 60 (expression -> BREAK .)
+    (               reduce using rule 60 (expression -> BREAK .)
+    BREAK           reduce using rule 60 (expression -> BREAK .)
+    CONTINUE        reduce using rule 60 (expression -> BREAK .)
+    ID              reduce using rule 60 (expression -> BREAK .)
+    INTNUM          reduce using rule 60 (expression -> BREAK .)
+    FLOATNUM        reduce using rule 60 (expression -> BREAK .)
 
 
 state 24
 
-    (59) expression -> CONTINUE .
+    (61) expression -> CONTINUE .
 
-    ;               reduce using rule 59 (expression -> CONTINUE .)
-    '               reduce using rule 59 (expression -> CONTINUE .)
-    +               reduce using rule 59 (expression -> CONTINUE .)
-    -               reduce using rule 59 (expression -> CONTINUE .)
-    DOTADD          reduce using rule 59 (expression -> CONTINUE .)
-    DOTSUB          reduce using rule 59 (expression -> CONTINUE .)
-    *               reduce using rule 59 (expression -> CONTINUE .)
-    /               reduce using rule 59 (expression -> CONTINUE .)
-    DOTMUL          reduce using rule 59 (expression -> CONTINUE .)
-    DOTDIV          reduce using rule 59 (expression -> CONTINUE .)
-    EQ              reduce using rule 59 (expression -> CONTINUE .)
-    NOTEQ           reduce using rule 59 (expression -> CONTINUE .)
-    GT              reduce using rule 59 (expression -> CONTINUE .)
-    LT              reduce using rule 59 (expression -> CONTINUE .)
-    GTEQ            reduce using rule 59 (expression -> CONTINUE .)
-    LTEQ            reduce using rule 59 (expression -> CONTINUE .)
-    :               reduce using rule 59 (expression -> CONTINUE .)
-    ,               reduce using rule 59 (expression -> CONTINUE .)
-    )               reduce using rule 59 (expression -> CONTINUE .)
-    {               reduce using rule 59 (expression -> CONTINUE .)
-    PRINT           reduce using rule 59 (expression -> CONTINUE .)
-    IF              reduce using rule 59 (expression -> CONTINUE .)
-    WHILE           reduce using rule 59 (expression -> CONTINUE .)
-    FOR             reduce using rule 59 (expression -> CONTINUE .)
-    RETURN          reduce using rule 59 (expression -> CONTINUE .)
-    [               reduce using rule 59 (expression -> CONTINUE .)
-    ZEROS           reduce using rule 59 (expression -> CONTINUE .)
-    ONES            reduce using rule 59 (expression -> CONTINUE .)
-    EYE             reduce using rule 59 (expression -> CONTINUE .)
-    STRING          reduce using rule 59 (expression -> CONTINUE .)
-    (               reduce using rule 59 (expression -> CONTINUE .)
-    BREAK           reduce using rule 59 (expression -> CONTINUE .)
-    CONTINUE        reduce using rule 59 (expression -> CONTINUE .)
-    ID              reduce using rule 59 (expression -> CONTINUE .)
-    INTNUM          reduce using rule 59 (expression -> CONTINUE .)
-    FLOATNUM        reduce using rule 59 (expression -> CONTINUE .)
+    ;               reduce using rule 61 (expression -> CONTINUE .)
+    '               reduce using rule 61 (expression -> CONTINUE .)
+    +               reduce using rule 61 (expression -> CONTINUE .)
+    -               reduce using rule 61 (expression -> CONTINUE .)
+    DOTADD          reduce using rule 61 (expression -> CONTINUE .)
+    DOTSUB          reduce using rule 61 (expression -> CONTINUE .)
+    *               reduce using rule 61 (expression -> CONTINUE .)
+    /               reduce using rule 61 (expression -> CONTINUE .)
+    DOTMUL          reduce using rule 61 (expression -> CONTINUE .)
+    DOTDIV          reduce using rule 61 (expression -> CONTINUE .)
+    EQ              reduce using rule 61 (expression -> CONTINUE .)
+    NOTEQ           reduce using rule 61 (expression -> CONTINUE .)
+    GT              reduce using rule 61 (expression -> CONTINUE .)
+    LT              reduce using rule 61 (expression -> CONTINUE .)
+    GTEQ            reduce using rule 61 (expression -> CONTINUE .)
+    LTEQ            reduce using rule 61 (expression -> CONTINUE .)
+    :               reduce using rule 61 (expression -> CONTINUE .)
+    ,               reduce using rule 61 (expression -> CONTINUE .)
+    )               reduce using rule 61 (expression -> CONTINUE .)
+    {               reduce using rule 61 (expression -> CONTINUE .)
+    PRINT           reduce using rule 61 (expression -> CONTINUE .)
+    IF              reduce using rule 61 (expression -> CONTINUE .)
+    WHILE           reduce using rule 61 (expression -> CONTINUE .)
+    FOR             reduce using rule 61 (expression -> CONTINUE .)
+    RETURN          reduce using rule 61 (expression -> CONTINUE .)
+    [               reduce using rule 61 (expression -> CONTINUE .)
+    ZEROS           reduce using rule 61 (expression -> CONTINUE .)
+    ONES            reduce using rule 61 (expression -> CONTINUE .)
+    EYE             reduce using rule 61 (expression -> CONTINUE .)
+    STRING          reduce using rule 61 (expression -> CONTINUE .)
+    (               reduce using rule 61 (expression -> CONTINUE .)
+    BREAK           reduce using rule 61 (expression -> CONTINUE .)
+    CONTINUE        reduce using rule 61 (expression -> CONTINUE .)
+    ID              reduce using rule 61 (expression -> CONTINUE .)
+    INTNUM          reduce using rule 61 (expression -> CONTINUE .)
+    FLOATNUM        reduce using rule 61 (expression -> CONTINUE .)
 
 
 state 25
 
-    (55) assignable -> matrixcellgetter .
+    (57) assignable -> matrixcellgetter .
 
-    =               reduce using rule 55 (assignable -> matrixcellgetter .)
-    ADDASSIGN       reduce using rule 55 (assignable -> matrixcellgetter .)
-    SUBASSIGN       reduce using rule 55 (assignable -> matrixcellgetter .)
-    MULASSIGN       reduce using rule 55 (assignable -> matrixcellgetter .)
-    DIVASSIGN       reduce using rule 55 (assignable -> matrixcellgetter .)
-    ;               reduce using rule 55 (assignable -> matrixcellgetter .)
-    '               reduce using rule 55 (assignable -> matrixcellgetter .)
-    +               reduce using rule 55 (assignable -> matrixcellgetter .)
-    -               reduce using rule 55 (assignable -> matrixcellgetter .)
-    DOTADD          reduce using rule 55 (assignable -> matrixcellgetter .)
-    DOTSUB          reduce using rule 55 (assignable -> matrixcellgetter .)
-    *               reduce using rule 55 (assignable -> matrixcellgetter .)
-    /               reduce using rule 55 (assignable -> matrixcellgetter .)
-    DOTMUL          reduce using rule 55 (assignable -> matrixcellgetter .)
-    DOTDIV          reduce using rule 55 (assignable -> matrixcellgetter .)
-    EQ              reduce using rule 55 (assignable -> matrixcellgetter .)
-    NOTEQ           reduce using rule 55 (assignable -> matrixcellgetter .)
-    GT              reduce using rule 55 (assignable -> matrixcellgetter .)
-    LT              reduce using rule 55 (assignable -> matrixcellgetter .)
-    GTEQ            reduce using rule 55 (assignable -> matrixcellgetter .)
-    LTEQ            reduce using rule 55 (assignable -> matrixcellgetter .)
-    :               reduce using rule 55 (assignable -> matrixcellgetter .)
-    ,               reduce using rule 55 (assignable -> matrixcellgetter .)
-    )               reduce using rule 55 (assignable -> matrixcellgetter .)
-    {               reduce using rule 55 (assignable -> matrixcellgetter .)
-    PRINT           reduce using rule 55 (assignable -> matrixcellgetter .)
-    IF              reduce using rule 55 (assignable -> matrixcellgetter .)
-    WHILE           reduce using rule 55 (assignable -> matrixcellgetter .)
-    FOR             reduce using rule 55 (assignable -> matrixcellgetter .)
-    RETURN          reduce using rule 55 (assignable -> matrixcellgetter .)
-    [               reduce using rule 55 (assignable -> matrixcellgetter .)
-    ZEROS           reduce using rule 55 (assignable -> matrixcellgetter .)
-    ONES            reduce using rule 55 (assignable -> matrixcellgetter .)
-    EYE             reduce using rule 55 (assignable -> matrixcellgetter .)
-    STRING          reduce using rule 55 (assignable -> matrixcellgetter .)
-    (               reduce using rule 55 (assignable -> matrixcellgetter .)
-    BREAK           reduce using rule 55 (assignable -> matrixcellgetter .)
-    CONTINUE        reduce using rule 55 (assignable -> matrixcellgetter .)
-    ID              reduce using rule 55 (assignable -> matrixcellgetter .)
-    INTNUM          reduce using rule 55 (assignable -> matrixcellgetter .)
-    FLOATNUM        reduce using rule 55 (assignable -> matrixcellgetter .)
+    =               reduce using rule 57 (assignable -> matrixcellgetter .)
+    ADDASSIGN       reduce using rule 57 (assignable -> matrixcellgetter .)
+    SUBASSIGN       reduce using rule 57 (assignable -> matrixcellgetter .)
+    MULASSIGN       reduce using rule 57 (assignable -> matrixcellgetter .)
+    DIVASSIGN       reduce using rule 57 (assignable -> matrixcellgetter .)
+    ;               reduce using rule 57 (assignable -> matrixcellgetter .)
+    '               reduce using rule 57 (assignable -> matrixcellgetter .)
+    +               reduce using rule 57 (assignable -> matrixcellgetter .)
+    -               reduce using rule 57 (assignable -> matrixcellgetter .)
+    DOTADD          reduce using rule 57 (assignable -> matrixcellgetter .)
+    DOTSUB          reduce using rule 57 (assignable -> matrixcellgetter .)
+    *               reduce using rule 57 (assignable -> matrixcellgetter .)
+    /               reduce using rule 57 (assignable -> matrixcellgetter .)
+    DOTMUL          reduce using rule 57 (assignable -> matrixcellgetter .)
+    DOTDIV          reduce using rule 57 (assignable -> matrixcellgetter .)
+    EQ              reduce using rule 57 (assignable -> matrixcellgetter .)
+    NOTEQ           reduce using rule 57 (assignable -> matrixcellgetter .)
+    GT              reduce using rule 57 (assignable -> matrixcellgetter .)
+    LT              reduce using rule 57 (assignable -> matrixcellgetter .)
+    GTEQ            reduce using rule 57 (assignable -> matrixcellgetter .)
+    LTEQ            reduce using rule 57 (assignable -> matrixcellgetter .)
+    :               reduce using rule 57 (assignable -> matrixcellgetter .)
+    ,               reduce using rule 57 (assignable -> matrixcellgetter .)
+    )               reduce using rule 57 (assignable -> matrixcellgetter .)
+    {               reduce using rule 57 (assignable -> matrixcellgetter .)
+    PRINT           reduce using rule 57 (assignable -> matrixcellgetter .)
+    IF              reduce using rule 57 (assignable -> matrixcellgetter .)
+    WHILE           reduce using rule 57 (assignable -> matrixcellgetter .)
+    FOR             reduce using rule 57 (assignable -> matrixcellgetter .)
+    RETURN          reduce using rule 57 (assignable -> matrixcellgetter .)
+    [               reduce using rule 57 (assignable -> matrixcellgetter .)
+    ZEROS           reduce using rule 57 (assignable -> matrixcellgetter .)
+    ONES            reduce using rule 57 (assignable -> matrixcellgetter .)
+    EYE             reduce using rule 57 (assignable -> matrixcellgetter .)
+    STRING          reduce using rule 57 (assignable -> matrixcellgetter .)
+    (               reduce using rule 57 (assignable -> matrixcellgetter .)
+    BREAK           reduce using rule 57 (assignable -> matrixcellgetter .)
+    CONTINUE        reduce using rule 57 (assignable -> matrixcellgetter .)
+    ID              reduce using rule 57 (assignable -> matrixcellgetter .)
+    INTNUM          reduce using rule 57 (assignable -> matrixcellgetter .)
+    FLOATNUM        reduce using rule 57 (assignable -> matrixcellgetter .)
 
 
 state 26
@@ -1374,22 +1377,22 @@ state 31
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -1438,22 +1441,22 @@ state 32
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -1502,22 +1505,22 @@ state 33
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -1566,22 +1569,22 @@ state 34
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -1630,22 +1633,22 @@ state 35
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -1694,22 +1697,22 @@ state 36
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -1758,22 +1761,22 @@ state 37
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -1822,22 +1825,22 @@ state 38
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -1886,22 +1889,22 @@ state 39
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -1950,22 +1953,22 @@ state 40
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -2014,22 +2017,22 @@ state 41
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -2078,22 +2081,22 @@ state 42
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -2142,22 +2145,22 @@ state 43
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -2206,22 +2209,22 @@ state 44
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -2245,7 +2248,7 @@ state 44
 
 state 45
 
-    (61) range -> expression : . expression
+    (63) range -> expression : . expression
     (6) expression -> . RETURN expression
     (15) expression -> . [ minit ]
     (16) expression -> . [ ]
@@ -2270,22 +2273,22 @@ state 45
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -2343,22 +2346,22 @@ state 46
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     }               shift and go to state 84
     {               shift and go to state 6
@@ -2415,11 +2418,10 @@ state 48
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 13 (expressions -> expression .)
     ,               reduce using rule 13 (expressions -> expression .)
-    )               reduce using rule 13 (expressions -> expression .)
     '               shift and go to state 30
     +               shift and go to state 31
     -               shift and go to state 32
@@ -2466,22 +2468,22 @@ state 49
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -2505,7 +2507,7 @@ state 49
 
 state 50
 
-    (57) expression -> ( expression . )
+    (59) expression -> ( expression . )
     (29) expression -> expression . '
     (34) expression -> expression . + expression
     (35) expression -> expression . - expression
@@ -2521,7 +2523,7 @@ state 50
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     )               shift and go to state 88
     '               shift and go to state 30
@@ -2569,22 +2571,22 @@ state 51
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -2615,7 +2617,7 @@ state 52
 
 state 53
 
-    (56) matrixcellgetter -> ID [ . INTNUM , INTNUM ]
+    (58) matrixcellgetter -> ID [ . INTNUM , INTNUM ]
 
     INTNUM          shift and go to state 91
 
@@ -2638,7 +2640,7 @@ state 54
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
   ! shift/reduce conflict for ' resolved as shift
   ! shift/reduce conflict for + resolved as shift
@@ -2823,22 +2825,22 @@ state 60
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -2887,22 +2889,22 @@ state 61
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -2951,22 +2953,22 @@ state 62
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -3015,22 +3017,22 @@ state 63
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -3079,22 +3081,22 @@ state 64
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -3134,7 +3136,7 @@ state 65
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 28 (expression -> - expression .)
     +               reduce using rule 28 (expression -> - expression .)
@@ -3193,204 +3195,45 @@ state 65
 
 state 66
 
-    (48) expression -> ZEROS ( . expressions )
-    (13) expressions -> . expression
-    (14) expressions -> . expressions , expression
-    (6) expression -> . RETURN expression
-    (15) expression -> . [ minit ]
-    (16) expression -> . [ ]
-    (27) expression -> . assignable = expression
-    (28) expression -> . - expression
-    (29) expression -> . expression '
-    (30) expression -> . assignable ADDASSIGN expression
-    (31) expression -> . assignable SUBASSIGN expression
-    (32) expression -> . assignable MULASSIGN expression
-    (33) expression -> . assignable DIVASSIGN expression
-    (34) expression -> . expression + expression
-    (35) expression -> . expression - expression
-    (36) expression -> . expression DOTADD expression
-    (37) expression -> . expression DOTSUB expression
-    (38) expression -> . expression * expression
-    (39) expression -> . expression / expression
-    (40) expression -> . expression DOTMUL expression
-    (41) expression -> . expression DOTDIV expression
-    (42) expression -> . expression EQ expression
-    (43) expression -> . expression NOTEQ expression
-    (44) expression -> . expression GT expression
-    (45) expression -> . expression LT expression
-    (46) expression -> . expression GTEQ expression
-    (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> ZEROS ( . numbers )
+    (48) numbers -> . number
+    (49) numbers -> . numbers , number
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
-    RETURN          shift and go to state 14
-    [               shift and go to state 15
-    -               shift and go to state 17
-    ZEROS           shift and go to state 18
-    ONES            shift and go to state 19
-    EYE             shift and go to state 20
-    STRING          shift and go to state 22
-    (               shift and go to state 9
-    BREAK           shift and go to state 23
-    CONTINUE        shift and go to state 24
-    ID              shift and go to state 12
     INTNUM          shift and go to state 26
     FLOATNUM        shift and go to state 27
 
-    expressions                    shift and go to state 101
-    expression                     shift and go to state 48
-    assignable                     shift and go to state 16
-    number                         shift and go to state 21
-    range                          shift and go to state 13
-    matrixcellgetter               shift and go to state 25
+    numbers                        shift and go to state 101
+    number                         shift and go to state 102
 
 state 67
 
-    (49) expression -> ONES ( . expressions )
-    (13) expressions -> . expression
-    (14) expressions -> . expressions , expression
-    (6) expression -> . RETURN expression
-    (15) expression -> . [ minit ]
-    (16) expression -> . [ ]
-    (27) expression -> . assignable = expression
-    (28) expression -> . - expression
-    (29) expression -> . expression '
-    (30) expression -> . assignable ADDASSIGN expression
-    (31) expression -> . assignable SUBASSIGN expression
-    (32) expression -> . assignable MULASSIGN expression
-    (33) expression -> . assignable DIVASSIGN expression
-    (34) expression -> . expression + expression
-    (35) expression -> . expression - expression
-    (36) expression -> . expression DOTADD expression
-    (37) expression -> . expression DOTSUB expression
-    (38) expression -> . expression * expression
-    (39) expression -> . expression / expression
-    (40) expression -> . expression DOTMUL expression
-    (41) expression -> . expression DOTDIV expression
-    (42) expression -> . expression EQ expression
-    (43) expression -> . expression NOTEQ expression
-    (44) expression -> . expression GT expression
-    (45) expression -> . expression LT expression
-    (46) expression -> . expression GTEQ expression
-    (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (51) expression -> ONES ( . numbers )
+    (48) numbers -> . number
+    (49) numbers -> . numbers , number
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
-    RETURN          shift and go to state 14
-    [               shift and go to state 15
-    -               shift and go to state 17
-    ZEROS           shift and go to state 18
-    ONES            shift and go to state 19
-    EYE             shift and go to state 20
-    STRING          shift and go to state 22
-    (               shift and go to state 9
-    BREAK           shift and go to state 23
-    CONTINUE        shift and go to state 24
-    ID              shift and go to state 12
     INTNUM          shift and go to state 26
     FLOATNUM        shift and go to state 27
 
-    expressions                    shift and go to state 102
-    expression                     shift and go to state 48
-    assignable                     shift and go to state 16
-    number                         shift and go to state 21
-    range                          shift and go to state 13
-    matrixcellgetter               shift and go to state 25
+    numbers                        shift and go to state 103
+    number                         shift and go to state 102
 
 state 68
 
-    (50) expression -> EYE ( . expressions )
-    (13) expressions -> . expression
-    (14) expressions -> . expressions , expression
-    (6) expression -> . RETURN expression
-    (15) expression -> . [ minit ]
-    (16) expression -> . [ ]
-    (27) expression -> . assignable = expression
-    (28) expression -> . - expression
-    (29) expression -> . expression '
-    (30) expression -> . assignable ADDASSIGN expression
-    (31) expression -> . assignable SUBASSIGN expression
-    (32) expression -> . assignable MULASSIGN expression
-    (33) expression -> . assignable DIVASSIGN expression
-    (34) expression -> . expression + expression
-    (35) expression -> . expression - expression
-    (36) expression -> . expression DOTADD expression
-    (37) expression -> . expression DOTSUB expression
-    (38) expression -> . expression * expression
-    (39) expression -> . expression / expression
-    (40) expression -> . expression DOTMUL expression
-    (41) expression -> . expression DOTDIV expression
-    (42) expression -> . expression EQ expression
-    (43) expression -> . expression NOTEQ expression
-    (44) expression -> . expression GT expression
-    (45) expression -> . expression LT expression
-    (46) expression -> . expression GTEQ expression
-    (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (52) expression -> EYE ( . numbers )
+    (48) numbers -> . number
+    (49) numbers -> . numbers , number
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
-    RETURN          shift and go to state 14
-    [               shift and go to state 15
-    -               shift and go to state 17
-    ZEROS           shift and go to state 18
-    ONES            shift and go to state 19
-    EYE             shift and go to state 20
-    STRING          shift and go to state 22
-    (               shift and go to state 9
-    BREAK           shift and go to state 23
-    CONTINUE        shift and go to state 24
-    ID              shift and go to state 12
     INTNUM          shift and go to state 26
     FLOATNUM        shift and go to state 27
 
-    expressions                    shift and go to state 103
-    expression                     shift and go to state 48
-    assignable                     shift and go to state 16
-    number                         shift and go to state 21
-    range                          shift and go to state 13
-    matrixcellgetter               shift and go to state 25
+    numbers                        shift and go to state 104
+    number                         shift and go to state 102
 
 state 69
 
@@ -3410,7 +3253,7 @@ state 69
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 34 (expression -> expression + expression .)
     +               reduce using rule 34 (expression -> expression + expression .)
@@ -3485,7 +3328,7 @@ state 70
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 35 (expression -> expression - expression .)
     +               reduce using rule 35 (expression -> expression - expression .)
@@ -3560,7 +3403,7 @@ state 71
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 36 (expression -> expression DOTADD expression .)
     +               reduce using rule 36 (expression -> expression DOTADD expression .)
@@ -3635,7 +3478,7 @@ state 72
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 37 (expression -> expression DOTSUB expression .)
     +               reduce using rule 37 (expression -> expression DOTSUB expression .)
@@ -3710,7 +3553,7 @@ state 73
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 38 (expression -> expression * expression .)
     +               reduce using rule 38 (expression -> expression * expression .)
@@ -3785,7 +3628,7 @@ state 74
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 39 (expression -> expression / expression .)
     +               reduce using rule 39 (expression -> expression / expression .)
@@ -3860,7 +3703,7 @@ state 75
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 40 (expression -> expression DOTMUL expression .)
     +               reduce using rule 40 (expression -> expression DOTMUL expression .)
@@ -3935,7 +3778,7 @@ state 76
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 41 (expression -> expression DOTDIV expression .)
     +               reduce using rule 41 (expression -> expression DOTDIV expression .)
@@ -4010,7 +3853,7 @@ state 77
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 42 (expression -> expression EQ expression .)
     EQ              reduce using rule 42 (expression -> expression EQ expression .)
@@ -4085,7 +3928,7 @@ state 78
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
   ! shift/reduce conflict for ' resolved as shift
   ! shift/reduce conflict for + resolved as shift
@@ -4176,7 +4019,7 @@ state 79
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 44 (expression -> expression GT expression .)
     EQ              reduce using rule 44 (expression -> expression GT expression .)
@@ -4251,7 +4094,7 @@ state 80
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 45 (expression -> expression LT expression .)
     EQ              reduce using rule 45 (expression -> expression LT expression .)
@@ -4326,7 +4169,7 @@ state 81
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 46 (expression -> expression GTEQ expression .)
     EQ              reduce using rule 46 (expression -> expression GTEQ expression .)
@@ -4401,7 +4244,7 @@ state 82
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 47 (expression -> expression LTEQ expression .)
     EQ              reduce using rule 47 (expression -> expression LTEQ expression .)
@@ -4460,7 +4303,7 @@ state 82
 
 state 83
 
-    (61) range -> expression : expression .
+    (63) range -> expression : expression .
     (29) expression -> expression . '
     (34) expression -> expression . + expression
     (35) expression -> expression . - expression
@@ -4476,7 +4319,7 @@ state 83
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
   ! shift/reduce conflict for ' resolved as shift
   ! shift/reduce conflict for + resolved as shift
@@ -4494,26 +4337,26 @@ state 83
   ! shift/reduce conflict for GTEQ resolved as shift
   ! shift/reduce conflict for LTEQ resolved as shift
   ! shift/reduce conflict for : resolved as shift
-    ;               reduce using rule 61 (range -> expression : expression .)
-    ,               reduce using rule 61 (range -> expression : expression .)
-    )               reduce using rule 61 (range -> expression : expression .)
-    {               reduce using rule 61 (range -> expression : expression .)
-    PRINT           reduce using rule 61 (range -> expression : expression .)
-    IF              reduce using rule 61 (range -> expression : expression .)
-    WHILE           reduce using rule 61 (range -> expression : expression .)
-    FOR             reduce using rule 61 (range -> expression : expression .)
-    RETURN          reduce using rule 61 (range -> expression : expression .)
-    [               reduce using rule 61 (range -> expression : expression .)
-    ZEROS           reduce using rule 61 (range -> expression : expression .)
-    ONES            reduce using rule 61 (range -> expression : expression .)
-    EYE             reduce using rule 61 (range -> expression : expression .)
-    STRING          reduce using rule 61 (range -> expression : expression .)
-    (               reduce using rule 61 (range -> expression : expression .)
-    BREAK           reduce using rule 61 (range -> expression : expression .)
-    CONTINUE        reduce using rule 61 (range -> expression : expression .)
-    ID              reduce using rule 61 (range -> expression : expression .)
-    INTNUM          reduce using rule 61 (range -> expression : expression .)
-    FLOATNUM        reduce using rule 61 (range -> expression : expression .)
+    ;               reduce using rule 63 (range -> expression : expression .)
+    ,               reduce using rule 63 (range -> expression : expression .)
+    )               reduce using rule 63 (range -> expression : expression .)
+    {               reduce using rule 63 (range -> expression : expression .)
+    PRINT           reduce using rule 63 (range -> expression : expression .)
+    IF              reduce using rule 63 (range -> expression : expression .)
+    WHILE           reduce using rule 63 (range -> expression : expression .)
+    FOR             reduce using rule 63 (range -> expression : expression .)
+    RETURN          reduce using rule 63 (range -> expression : expression .)
+    [               reduce using rule 63 (range -> expression : expression .)
+    ZEROS           reduce using rule 63 (range -> expression : expression .)
+    ONES            reduce using rule 63 (range -> expression : expression .)
+    EYE             reduce using rule 63 (range -> expression : expression .)
+    STRING          reduce using rule 63 (range -> expression : expression .)
+    (               reduce using rule 63 (range -> expression : expression .)
+    BREAK           reduce using rule 63 (range -> expression : expression .)
+    CONTINUE        reduce using rule 63 (range -> expression : expression .)
+    ID              reduce using rule 63 (range -> expression : expression .)
+    INTNUM          reduce using rule 63 (range -> expression : expression .)
+    FLOATNUM        reduce using rule 63 (range -> expression : expression .)
     '               shift and go to state 30
     +               shift and go to state 31
     -               shift and go to state 32
@@ -4531,22 +4374,22 @@ state 83
     LTEQ            shift and go to state 44
     :               shift and go to state 45
 
-  ! '               [ reduce using rule 61 (range -> expression : expression .) ]
-  ! +               [ reduce using rule 61 (range -> expression : expression .) ]
-  ! -               [ reduce using rule 61 (range -> expression : expression .) ]
-  ! DOTADD          [ reduce using rule 61 (range -> expression : expression .) ]
-  ! DOTSUB          [ reduce using rule 61 (range -> expression : expression .) ]
-  ! *               [ reduce using rule 61 (range -> expression : expression .) ]
-  ! /               [ reduce using rule 61 (range -> expression : expression .) ]
-  ! DOTMUL          [ reduce using rule 61 (range -> expression : expression .) ]
-  ! DOTDIV          [ reduce using rule 61 (range -> expression : expression .) ]
-  ! EQ              [ reduce using rule 61 (range -> expression : expression .) ]
-  ! NOTEQ           [ reduce using rule 61 (range -> expression : expression .) ]
-  ! GT              [ reduce using rule 61 (range -> expression : expression .) ]
-  ! LT              [ reduce using rule 61 (range -> expression : expression .) ]
-  ! GTEQ            [ reduce using rule 61 (range -> expression : expression .) ]
-  ! LTEQ            [ reduce using rule 61 (range -> expression : expression .) ]
-  ! :               [ reduce using rule 61 (range -> expression : expression .) ]
+  ! '               [ reduce using rule 63 (range -> expression : expression .) ]
+  ! +               [ reduce using rule 63 (range -> expression : expression .) ]
+  ! -               [ reduce using rule 63 (range -> expression : expression .) ]
+  ! DOTADD          [ reduce using rule 63 (range -> expression : expression .) ]
+  ! DOTSUB          [ reduce using rule 63 (range -> expression : expression .) ]
+  ! *               [ reduce using rule 63 (range -> expression : expression .) ]
+  ! /               [ reduce using rule 63 (range -> expression : expression .) ]
+  ! DOTMUL          [ reduce using rule 63 (range -> expression : expression .) ]
+  ! DOTDIV          [ reduce using rule 63 (range -> expression : expression .) ]
+  ! EQ              [ reduce using rule 63 (range -> expression : expression .) ]
+  ! NOTEQ           [ reduce using rule 63 (range -> expression : expression .) ]
+  ! GT              [ reduce using rule 63 (range -> expression : expression .) ]
+  ! LT              [ reduce using rule 63 (range -> expression : expression .) ]
+  ! GTEQ            [ reduce using rule 63 (range -> expression : expression .) ]
+  ! LTEQ            [ reduce using rule 63 (range -> expression : expression .) ]
+  ! :               [ reduce using rule 63 (range -> expression : expression .) ]
 
 
 state 84
@@ -4630,22 +4473,22 @@ state 86
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -4661,7 +4504,7 @@ state 86
     INTNUM          shift and go to state 26
     FLOATNUM        shift and go to state 27
 
-    expression                     shift and go to state 104
+    expression                     shift and go to state 105
     assignable                     shift and go to state 16
     number                         shift and go to state 21
     range                          shift and go to state 13
@@ -4686,9 +4529,9 @@ state 87
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
-    )               shift and go to state 105
+    )               shift and go to state 106
     '               shift and go to state 30
     +               shift and go to state 31
     -               shift and go to state 32
@@ -4709,44 +4552,44 @@ state 87
 
 state 88
 
-    (57) expression -> ( expression ) .
+    (59) expression -> ( expression ) .
 
-    ;               reduce using rule 57 (expression -> ( expression ) .)
-    '               reduce using rule 57 (expression -> ( expression ) .)
-    +               reduce using rule 57 (expression -> ( expression ) .)
-    -               reduce using rule 57 (expression -> ( expression ) .)
-    DOTADD          reduce using rule 57 (expression -> ( expression ) .)
-    DOTSUB          reduce using rule 57 (expression -> ( expression ) .)
-    *               reduce using rule 57 (expression -> ( expression ) .)
-    /               reduce using rule 57 (expression -> ( expression ) .)
-    DOTMUL          reduce using rule 57 (expression -> ( expression ) .)
-    DOTDIV          reduce using rule 57 (expression -> ( expression ) .)
-    EQ              reduce using rule 57 (expression -> ( expression ) .)
-    NOTEQ           reduce using rule 57 (expression -> ( expression ) .)
-    GT              reduce using rule 57 (expression -> ( expression ) .)
-    LT              reduce using rule 57 (expression -> ( expression ) .)
-    GTEQ            reduce using rule 57 (expression -> ( expression ) .)
-    LTEQ            reduce using rule 57 (expression -> ( expression ) .)
-    :               reduce using rule 57 (expression -> ( expression ) .)
-    ,               reduce using rule 57 (expression -> ( expression ) .)
-    )               reduce using rule 57 (expression -> ( expression ) .)
-    {               reduce using rule 57 (expression -> ( expression ) .)
-    PRINT           reduce using rule 57 (expression -> ( expression ) .)
-    IF              reduce using rule 57 (expression -> ( expression ) .)
-    WHILE           reduce using rule 57 (expression -> ( expression ) .)
-    FOR             reduce using rule 57 (expression -> ( expression ) .)
-    RETURN          reduce using rule 57 (expression -> ( expression ) .)
-    [               reduce using rule 57 (expression -> ( expression ) .)
-    ZEROS           reduce using rule 57 (expression -> ( expression ) .)
-    ONES            reduce using rule 57 (expression -> ( expression ) .)
-    EYE             reduce using rule 57 (expression -> ( expression ) .)
-    STRING          reduce using rule 57 (expression -> ( expression ) .)
-    (               reduce using rule 57 (expression -> ( expression ) .)
-    BREAK           reduce using rule 57 (expression -> ( expression ) .)
-    CONTINUE        reduce using rule 57 (expression -> ( expression ) .)
-    ID              reduce using rule 57 (expression -> ( expression ) .)
-    INTNUM          reduce using rule 57 (expression -> ( expression ) .)
-    FLOATNUM        reduce using rule 57 (expression -> ( expression ) .)
+    ;               reduce using rule 59 (expression -> ( expression ) .)
+    '               reduce using rule 59 (expression -> ( expression ) .)
+    +               reduce using rule 59 (expression -> ( expression ) .)
+    -               reduce using rule 59 (expression -> ( expression ) .)
+    DOTADD          reduce using rule 59 (expression -> ( expression ) .)
+    DOTSUB          reduce using rule 59 (expression -> ( expression ) .)
+    *               reduce using rule 59 (expression -> ( expression ) .)
+    /               reduce using rule 59 (expression -> ( expression ) .)
+    DOTMUL          reduce using rule 59 (expression -> ( expression ) .)
+    DOTDIV          reduce using rule 59 (expression -> ( expression ) .)
+    EQ              reduce using rule 59 (expression -> ( expression ) .)
+    NOTEQ           reduce using rule 59 (expression -> ( expression ) .)
+    GT              reduce using rule 59 (expression -> ( expression ) .)
+    LT              reduce using rule 59 (expression -> ( expression ) .)
+    GTEQ            reduce using rule 59 (expression -> ( expression ) .)
+    LTEQ            reduce using rule 59 (expression -> ( expression ) .)
+    :               reduce using rule 59 (expression -> ( expression ) .)
+    ,               reduce using rule 59 (expression -> ( expression ) .)
+    )               reduce using rule 59 (expression -> ( expression ) .)
+    {               reduce using rule 59 (expression -> ( expression ) .)
+    PRINT           reduce using rule 59 (expression -> ( expression ) .)
+    IF              reduce using rule 59 (expression -> ( expression ) .)
+    WHILE           reduce using rule 59 (expression -> ( expression ) .)
+    FOR             reduce using rule 59 (expression -> ( expression ) .)
+    RETURN          reduce using rule 59 (expression -> ( expression ) .)
+    [               reduce using rule 59 (expression -> ( expression ) .)
+    ZEROS           reduce using rule 59 (expression -> ( expression ) .)
+    ONES            reduce using rule 59 (expression -> ( expression ) .)
+    EYE             reduce using rule 59 (expression -> ( expression ) .)
+    STRING          reduce using rule 59 (expression -> ( expression ) .)
+    (               reduce using rule 59 (expression -> ( expression ) .)
+    BREAK           reduce using rule 59 (expression -> ( expression ) .)
+    CONTINUE        reduce using rule 59 (expression -> ( expression ) .)
+    ID              reduce using rule 59 (expression -> ( expression ) .)
+    INTNUM          reduce using rule 59 (expression -> ( expression ) .)
+    FLOATNUM        reduce using rule 59 (expression -> ( expression ) .)
 
 
 state 89
@@ -4767,9 +4610,9 @@ state 89
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
-    )               shift and go to state 106
+    )               shift and go to state 107
     '               shift and go to state 30
     +               shift and go to state 31
     -               shift and go to state 32
@@ -4791,7 +4634,7 @@ state 89
 state 90
 
     (7) instruction -> FOR ID = . range statement
-    (61) range -> . expression : expression
+    (63) range -> . expression : expression
     (6) expression -> . RETURN expression
     (15) expression -> . [ minit ]
     (16) expression -> . [ ]
@@ -4816,21 +4659,21 @@ state 90
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     RETURN          shift and go to state 14
     [               shift and go to state 15
@@ -4846,17 +4689,17 @@ state 90
     INTNUM          shift and go to state 26
     FLOATNUM        shift and go to state 27
 
-    range                          shift and go to state 107
-    expression                     shift and go to state 108
+    range                          shift and go to state 108
+    expression                     shift and go to state 109
     assignable                     shift and go to state 16
     number                         shift and go to state 21
     matrixcellgetter               shift and go to state 25
 
 state 91
 
-    (56) matrixcellgetter -> ID [ INTNUM . , INTNUM ]
+    (58) matrixcellgetter -> ID [ INTNUM . , INTNUM ]
 
-    ,               shift and go to state 109
+    ,               shift and go to state 110
 
 
 state 92
@@ -4865,7 +4708,7 @@ state 92
     (20) minit -> [ mrow . ]
     (22) minit -> [ mrow . ] , minit
 
-    ]               shift and go to state 110
+    ]               shift and go to state 111
 
 
 state 93
@@ -4931,7 +4774,7 @@ state 94
     FLOATNUM        shift and go to state 27
 
     mrow                           shift and go to state 58
-    minit                          shift and go to state 111
+    minit                          shift and go to state 112
     number                         shift and go to state 59
 
 state 95
@@ -4946,7 +4789,7 @@ state 95
     FLOATNUM        shift and go to state 27
 
     number                         shift and go to state 59
-    mrow                           shift and go to state 112
+    mrow                           shift and go to state 113
 
 state 96
 
@@ -4966,7 +4809,7 @@ state 96
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 27 (expression -> assignable = expression .)
     NOTEQ           reduce using rule 27 (expression -> assignable = expression .)
@@ -5041,7 +4884,7 @@ state 97
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
   ! shift/reduce conflict for ' resolved as shift
   ! shift/reduce conflict for + resolved as shift
@@ -5132,7 +4975,7 @@ state 98
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
   ! shift/reduce conflict for ' resolved as shift
   ! shift/reduce conflict for + resolved as shift
@@ -5223,7 +5066,7 @@ state 99
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
   ! shift/reduce conflict for ' resolved as shift
   ! shift/reduce conflict for + resolved as shift
@@ -5314,7 +5157,7 @@ state 100
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
   ! shift/reduce conflict for ' resolved as shift
   ! shift/reduce conflict for + resolved as shift
@@ -5389,32 +5232,40 @@ state 100
 
 state 101
 
-    (48) expression -> ZEROS ( expressions . )
-    (14) expressions -> expressions . , expression
+    (50) expression -> ZEROS ( numbers . )
+    (49) numbers -> numbers . , number
 
-    )               shift and go to state 113
-    ,               shift and go to state 86
+    )               shift and go to state 114
+    ,               shift and go to state 115
 
 
 state 102
 
-    (49) expression -> ONES ( expressions . )
-    (14) expressions -> expressions . , expression
+    (48) numbers -> number .
 
-    )               shift and go to state 114
-    ,               shift and go to state 86
+    )               reduce using rule 48 (numbers -> number .)
+    ,               reduce using rule 48 (numbers -> number .)
 
 
 state 103
 
-    (50) expression -> EYE ( expressions . )
-    (14) expressions -> expressions . , expression
+    (51) expression -> ONES ( numbers . )
+    (49) numbers -> numbers . , number
 
-    )               shift and go to state 115
-    ,               shift and go to state 86
+    )               shift and go to state 116
+    ,               shift and go to state 115
 
 
 state 104
+
+    (52) expression -> EYE ( numbers . )
+    (49) numbers -> numbers . , number
+
+    )               shift and go to state 117
+    ,               shift and go to state 115
+
+
+state 105
 
     (14) expressions -> expressions , expression .
     (29) expression -> expression . '
@@ -5432,11 +5283,10 @@ state 104
     (45) expression -> expression . LT expression
     (46) expression -> expression . GTEQ expression
     (47) expression -> expression . LTEQ expression
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
 
     ;               reduce using rule 14 (expressions -> expressions , expression .)
     ,               reduce using rule 14 (expressions -> expressions , expression .)
-    )               reduce using rule 14 (expressions -> expressions , expression .)
     '               shift and go to state 30
     +               shift and go to state 31
     -               shift and go to state 32
@@ -5455,7 +5305,7 @@ state 104
     :               shift and go to state 45
 
 
-state 105
+state 106
 
     (3) instruction -> IF ( expression ) . statement
     (4) instruction -> IF ( expression ) . statement ELSE statement
@@ -5491,22 +5341,22 @@ state 105
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     {               shift and go to state 6
     PRINT           shift and go to state 7
@@ -5528,14 +5378,14 @@ state 105
     FLOATNUM        shift and go to state 27
 
     expression                     shift and go to state 5
-    statement                      shift and go to state 116
+    statement                      shift and go to state 118
     instruction                    shift and go to state 4
     range                          shift and go to state 13
     assignable                     shift and go to state 16
     number                         shift and go to state 21
     matrixcellgetter               shift and go to state 25
 
-state 106
+state 107
 
     (5) instruction -> WHILE ( expression ) . statement
     (2) statement -> . instruction
@@ -5570,22 +5420,22 @@ state 106
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     {               shift and go to state 6
     PRINT           shift and go to state 7
@@ -5607,17 +5457,17 @@ state 106
     FLOATNUM        shift and go to state 27
 
     expression                     shift and go to state 5
-    statement                      shift and go to state 117
+    statement                      shift and go to state 119
     instruction                    shift and go to state 4
     range                          shift and go to state 13
     assignable                     shift and go to state 16
     number                         shift and go to state 21
     matrixcellgetter               shift and go to state 25
 
-state 107
+state 108
 
     (7) instruction -> FOR ID = range . statement
-    (60) expression -> range .
+    (62) expression -> range .
     (2) statement -> . instruction
     (10) statement -> . expression ;
     (11) statement -> . { statements }
@@ -5650,39 +5500,39 @@ state 107
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
   ! shift/reduce conflict for - resolved as shift
-    :               reduce using rule 60 (expression -> range .)
-    '               reduce using rule 60 (expression -> range .)
-    +               reduce using rule 60 (expression -> range .)
-    DOTADD          reduce using rule 60 (expression -> range .)
-    DOTSUB          reduce using rule 60 (expression -> range .)
-    *               reduce using rule 60 (expression -> range .)
-    /               reduce using rule 60 (expression -> range .)
-    DOTMUL          reduce using rule 60 (expression -> range .)
-    DOTDIV          reduce using rule 60 (expression -> range .)
-    EQ              reduce using rule 60 (expression -> range .)
-    NOTEQ           reduce using rule 60 (expression -> range .)
-    GT              reduce using rule 60 (expression -> range .)
-    LT              reduce using rule 60 (expression -> range .)
-    GTEQ            reduce using rule 60 (expression -> range .)
-    LTEQ            reduce using rule 60 (expression -> range .)
+    :               reduce using rule 62 (expression -> range .)
+    '               reduce using rule 62 (expression -> range .)
+    +               reduce using rule 62 (expression -> range .)
+    DOTADD          reduce using rule 62 (expression -> range .)
+    DOTSUB          reduce using rule 62 (expression -> range .)
+    *               reduce using rule 62 (expression -> range .)
+    /               reduce using rule 62 (expression -> range .)
+    DOTMUL          reduce using rule 62 (expression -> range .)
+    DOTDIV          reduce using rule 62 (expression -> range .)
+    EQ              reduce using rule 62 (expression -> range .)
+    NOTEQ           reduce using rule 62 (expression -> range .)
+    GT              reduce using rule 62 (expression -> range .)
+    LT              reduce using rule 62 (expression -> range .)
+    GTEQ            reduce using rule 62 (expression -> range .)
+    LTEQ            reduce using rule 62 (expression -> range .)
     {               shift and go to state 6
     PRINT           shift and go to state 7
     IF              shift and go to state 8
@@ -5702,19 +5552,19 @@ state 107
     INTNUM          shift and go to state 26
     FLOATNUM        shift and go to state 27
 
-  ! -               [ reduce using rule 60 (expression -> range .) ]
+  ! -               [ reduce using rule 62 (expression -> range .) ]
 
     range                          shift and go to state 13
-    statement                      shift and go to state 118
+    statement                      shift and go to state 120
     instruction                    shift and go to state 4
     expression                     shift and go to state 5
     assignable                     shift and go to state 16
     number                         shift and go to state 21
     matrixcellgetter               shift and go to state 25
 
-state 108
+state 109
 
-    (61) range -> expression . : expression
+    (63) range -> expression . : expression
     (29) expression -> expression . '
     (34) expression -> expression . + expression
     (35) expression -> expression . - expression
@@ -5749,31 +5599,31 @@ state 108
     LTEQ            shift and go to state 44
 
 
-state 109
-
-    (56) matrixcellgetter -> ID [ INTNUM , . INTNUM ]
-
-    INTNUM          shift and go to state 119
-
-
 state 110
+
+    (58) matrixcellgetter -> ID [ INTNUM , . INTNUM ]
+
+    INTNUM          shift and go to state 121
+
+
+state 111
 
     (19) minit -> [ mrow ] . ,
     (20) minit -> [ mrow ] .
     (22) minit -> [ mrow ] . , minit
 
-    ,               shift and go to state 120
+    ,               shift and go to state 122
     ]               reduce using rule 20 (minit -> [ mrow ] .)
 
 
-state 111
+state 112
 
     (21) minit -> mrow ; minit .
 
     ]               reduce using rule 21 (minit -> mrow ; minit .)
 
 
-state 112
+state 113
 
     (24) mrow -> number , mrow .
 
@@ -5781,133 +5631,144 @@ state 112
     ]               reduce using rule 24 (mrow -> number , mrow .)
 
 
-state 113
-
-    (48) expression -> ZEROS ( expressions ) .
-
-    ;               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    '               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    +               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    -               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    DOTADD          reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    DOTSUB          reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    *               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    /               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    DOTMUL          reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    DOTDIV          reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    EQ              reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    NOTEQ           reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    GT              reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    LT              reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    GTEQ            reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    LTEQ            reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    :               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    ,               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    )               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    {               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    PRINT           reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    IF              reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    WHILE           reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    FOR             reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    RETURN          reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    [               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    ZEROS           reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    ONES            reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    EYE             reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    STRING          reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    (               reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    BREAK           reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    CONTINUE        reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    ID              reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    INTNUM          reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-    FLOATNUM        reduce using rule 48 (expression -> ZEROS ( expressions ) .)
-
-
 state 114
 
-    (49) expression -> ONES ( expressions ) .
+    (50) expression -> ZEROS ( numbers ) .
 
-    ;               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    '               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    +               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    -               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    DOTADD          reduce using rule 49 (expression -> ONES ( expressions ) .)
-    DOTSUB          reduce using rule 49 (expression -> ONES ( expressions ) .)
-    *               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    /               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    DOTMUL          reduce using rule 49 (expression -> ONES ( expressions ) .)
-    DOTDIV          reduce using rule 49 (expression -> ONES ( expressions ) .)
-    EQ              reduce using rule 49 (expression -> ONES ( expressions ) .)
-    NOTEQ           reduce using rule 49 (expression -> ONES ( expressions ) .)
-    GT              reduce using rule 49 (expression -> ONES ( expressions ) .)
-    LT              reduce using rule 49 (expression -> ONES ( expressions ) .)
-    GTEQ            reduce using rule 49 (expression -> ONES ( expressions ) .)
-    LTEQ            reduce using rule 49 (expression -> ONES ( expressions ) .)
-    :               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    ,               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    )               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    {               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    PRINT           reduce using rule 49 (expression -> ONES ( expressions ) .)
-    IF              reduce using rule 49 (expression -> ONES ( expressions ) .)
-    WHILE           reduce using rule 49 (expression -> ONES ( expressions ) .)
-    FOR             reduce using rule 49 (expression -> ONES ( expressions ) .)
-    RETURN          reduce using rule 49 (expression -> ONES ( expressions ) .)
-    [               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    ZEROS           reduce using rule 49 (expression -> ONES ( expressions ) .)
-    ONES            reduce using rule 49 (expression -> ONES ( expressions ) .)
-    EYE             reduce using rule 49 (expression -> ONES ( expressions ) .)
-    STRING          reduce using rule 49 (expression -> ONES ( expressions ) .)
-    (               reduce using rule 49 (expression -> ONES ( expressions ) .)
-    BREAK           reduce using rule 49 (expression -> ONES ( expressions ) .)
-    CONTINUE        reduce using rule 49 (expression -> ONES ( expressions ) .)
-    ID              reduce using rule 49 (expression -> ONES ( expressions ) .)
-    INTNUM          reduce using rule 49 (expression -> ONES ( expressions ) .)
-    FLOATNUM        reduce using rule 49 (expression -> ONES ( expressions ) .)
+    ;               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    '               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    +               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    -               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    DOTADD          reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    DOTSUB          reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    *               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    /               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    DOTMUL          reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    DOTDIV          reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    EQ              reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    NOTEQ           reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    GT              reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    LT              reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    GTEQ            reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    LTEQ            reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    :               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    ,               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    )               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    {               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    PRINT           reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    IF              reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    WHILE           reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    FOR             reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    RETURN          reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    [               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    ZEROS           reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    ONES            reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    EYE             reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    STRING          reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    (               reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    BREAK           reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    CONTINUE        reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    ID              reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    INTNUM          reduce using rule 50 (expression -> ZEROS ( numbers ) .)
+    FLOATNUM        reduce using rule 50 (expression -> ZEROS ( numbers ) .)
 
 
 state 115
 
-    (50) expression -> EYE ( expressions ) .
+    (49) numbers -> numbers , . number
+    (25) number -> . INTNUM
+    (26) number -> . FLOATNUM
 
-    ;               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    '               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    +               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    -               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    DOTADD          reduce using rule 50 (expression -> EYE ( expressions ) .)
-    DOTSUB          reduce using rule 50 (expression -> EYE ( expressions ) .)
-    *               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    /               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    DOTMUL          reduce using rule 50 (expression -> EYE ( expressions ) .)
-    DOTDIV          reduce using rule 50 (expression -> EYE ( expressions ) .)
-    EQ              reduce using rule 50 (expression -> EYE ( expressions ) .)
-    NOTEQ           reduce using rule 50 (expression -> EYE ( expressions ) .)
-    GT              reduce using rule 50 (expression -> EYE ( expressions ) .)
-    LT              reduce using rule 50 (expression -> EYE ( expressions ) .)
-    GTEQ            reduce using rule 50 (expression -> EYE ( expressions ) .)
-    LTEQ            reduce using rule 50 (expression -> EYE ( expressions ) .)
-    :               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    ,               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    )               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    {               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    PRINT           reduce using rule 50 (expression -> EYE ( expressions ) .)
-    IF              reduce using rule 50 (expression -> EYE ( expressions ) .)
-    WHILE           reduce using rule 50 (expression -> EYE ( expressions ) .)
-    FOR             reduce using rule 50 (expression -> EYE ( expressions ) .)
-    RETURN          reduce using rule 50 (expression -> EYE ( expressions ) .)
-    [               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    ZEROS           reduce using rule 50 (expression -> EYE ( expressions ) .)
-    ONES            reduce using rule 50 (expression -> EYE ( expressions ) .)
-    EYE             reduce using rule 50 (expression -> EYE ( expressions ) .)
-    STRING          reduce using rule 50 (expression -> EYE ( expressions ) .)
-    (               reduce using rule 50 (expression -> EYE ( expressions ) .)
-    BREAK           reduce using rule 50 (expression -> EYE ( expressions ) .)
-    CONTINUE        reduce using rule 50 (expression -> EYE ( expressions ) .)
-    ID              reduce using rule 50 (expression -> EYE ( expressions ) .)
-    INTNUM          reduce using rule 50 (expression -> EYE ( expressions ) .)
-    FLOATNUM        reduce using rule 50 (expression -> EYE ( expressions ) .)
+    INTNUM          shift and go to state 26
+    FLOATNUM        shift and go to state 27
 
+    number                         shift and go to state 123
 
 state 116
+
+    (51) expression -> ONES ( numbers ) .
+
+    ;               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    '               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    +               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    -               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    DOTADD          reduce using rule 51 (expression -> ONES ( numbers ) .)
+    DOTSUB          reduce using rule 51 (expression -> ONES ( numbers ) .)
+    *               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    /               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    DOTMUL          reduce using rule 51 (expression -> ONES ( numbers ) .)
+    DOTDIV          reduce using rule 51 (expression -> ONES ( numbers ) .)
+    EQ              reduce using rule 51 (expression -> ONES ( numbers ) .)
+    NOTEQ           reduce using rule 51 (expression -> ONES ( numbers ) .)
+    GT              reduce using rule 51 (expression -> ONES ( numbers ) .)
+    LT              reduce using rule 51 (expression -> ONES ( numbers ) .)
+    GTEQ            reduce using rule 51 (expression -> ONES ( numbers ) .)
+    LTEQ            reduce using rule 51 (expression -> ONES ( numbers ) .)
+    :               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    ,               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    )               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    {               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    PRINT           reduce using rule 51 (expression -> ONES ( numbers ) .)
+    IF              reduce using rule 51 (expression -> ONES ( numbers ) .)
+    WHILE           reduce using rule 51 (expression -> ONES ( numbers ) .)
+    FOR             reduce using rule 51 (expression -> ONES ( numbers ) .)
+    RETURN          reduce using rule 51 (expression -> ONES ( numbers ) .)
+    [               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    ZEROS           reduce using rule 51 (expression -> ONES ( numbers ) .)
+    ONES            reduce using rule 51 (expression -> ONES ( numbers ) .)
+    EYE             reduce using rule 51 (expression -> ONES ( numbers ) .)
+    STRING          reduce using rule 51 (expression -> ONES ( numbers ) .)
+    (               reduce using rule 51 (expression -> ONES ( numbers ) .)
+    BREAK           reduce using rule 51 (expression -> ONES ( numbers ) .)
+    CONTINUE        reduce using rule 51 (expression -> ONES ( numbers ) .)
+    ID              reduce using rule 51 (expression -> ONES ( numbers ) .)
+    INTNUM          reduce using rule 51 (expression -> ONES ( numbers ) .)
+    FLOATNUM        reduce using rule 51 (expression -> ONES ( numbers ) .)
+
+
+state 117
+
+    (52) expression -> EYE ( numbers ) .
+
+    ;               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    '               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    +               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    -               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    DOTADD          reduce using rule 52 (expression -> EYE ( numbers ) .)
+    DOTSUB          reduce using rule 52 (expression -> EYE ( numbers ) .)
+    *               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    /               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    DOTMUL          reduce using rule 52 (expression -> EYE ( numbers ) .)
+    DOTDIV          reduce using rule 52 (expression -> EYE ( numbers ) .)
+    EQ              reduce using rule 52 (expression -> EYE ( numbers ) .)
+    NOTEQ           reduce using rule 52 (expression -> EYE ( numbers ) .)
+    GT              reduce using rule 52 (expression -> EYE ( numbers ) .)
+    LT              reduce using rule 52 (expression -> EYE ( numbers ) .)
+    GTEQ            reduce using rule 52 (expression -> EYE ( numbers ) .)
+    LTEQ            reduce using rule 52 (expression -> EYE ( numbers ) .)
+    :               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    ,               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    )               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    {               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    PRINT           reduce using rule 52 (expression -> EYE ( numbers ) .)
+    IF              reduce using rule 52 (expression -> EYE ( numbers ) .)
+    WHILE           reduce using rule 52 (expression -> EYE ( numbers ) .)
+    FOR             reduce using rule 52 (expression -> EYE ( numbers ) .)
+    RETURN          reduce using rule 52 (expression -> EYE ( numbers ) .)
+    [               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    ZEROS           reduce using rule 52 (expression -> EYE ( numbers ) .)
+    ONES            reduce using rule 52 (expression -> EYE ( numbers ) .)
+    EYE             reduce using rule 52 (expression -> EYE ( numbers ) .)
+    STRING          reduce using rule 52 (expression -> EYE ( numbers ) .)
+    (               reduce using rule 52 (expression -> EYE ( numbers ) .)
+    BREAK           reduce using rule 52 (expression -> EYE ( numbers ) .)
+    CONTINUE        reduce using rule 52 (expression -> EYE ( numbers ) .)
+    ID              reduce using rule 52 (expression -> EYE ( numbers ) .)
+    INTNUM          reduce using rule 52 (expression -> EYE ( numbers ) .)
+    FLOATNUM        reduce using rule 52 (expression -> EYE ( numbers ) .)
+
+
+state 118
 
     (3) instruction -> IF ( expression ) statement .
     (4) instruction -> IF ( expression ) statement . ELSE statement
@@ -5933,12 +5794,12 @@ state 116
     FLOATNUM        reduce using rule 3 (instruction -> IF ( expression ) statement .)
     $end            reduce using rule 3 (instruction -> IF ( expression ) statement .)
     }               reduce using rule 3 (instruction -> IF ( expression ) statement .)
-    ELSE            shift and go to state 121
+    ELSE            shift and go to state 124
 
   ! ELSE            [ reduce using rule 3 (instruction -> IF ( expression ) statement .) ]
 
 
-state 117
+state 119
 
     (5) instruction -> WHILE ( expression ) statement .
 
@@ -5965,7 +5826,7 @@ state 117
     ELSE            reduce using rule 5 (instruction -> WHILE ( expression ) statement .)
 
 
-state 118
+state 120
 
     (7) instruction -> FOR ID = range statement .
 
@@ -5992,14 +5853,14 @@ state 118
     ELSE            reduce using rule 7 (instruction -> FOR ID = range statement .)
 
 
-state 119
+state 121
 
-    (56) matrixcellgetter -> ID [ INTNUM , INTNUM . ]
+    (58) matrixcellgetter -> ID [ INTNUM , INTNUM . ]
 
-    ]               shift and go to state 122
+    ]               shift and go to state 125
 
 
-state 120
+state 122
 
     (19) minit -> [ mrow ] , .
     (22) minit -> [ mrow ] , . minit
@@ -6020,10 +5881,18 @@ state 120
     FLOATNUM        shift and go to state 27
 
     mrow                           shift and go to state 58
-    minit                          shift and go to state 123
+    minit                          shift and go to state 126
     number                         shift and go to state 59
 
-state 121
+state 123
+
+    (49) numbers -> numbers , number .
+
+    )               reduce using rule 49 (numbers -> numbers , number .)
+    ,               reduce using rule 49 (numbers -> numbers , number .)
+
+
+state 124
 
     (4) instruction -> IF ( expression ) statement ELSE . statement
     (2) statement -> . instruction
@@ -6058,22 +5927,22 @@ state 121
     (45) expression -> . expression LT expression
     (46) expression -> . expression GTEQ expression
     (47) expression -> . expression LTEQ expression
-    (48) expression -> . ZEROS ( expressions )
-    (49) expression -> . ONES ( expressions )
-    (50) expression -> . EYE ( expressions )
-    (51) expression -> . number
-    (52) expression -> . STRING
-    (53) expression -> . assignable
-    (57) expression -> . ( expression )
-    (58) expression -> . BREAK
-    (59) expression -> . CONTINUE
-    (60) expression -> . range
-    (54) assignable -> . ID
-    (55) assignable -> . matrixcellgetter
+    (50) expression -> . ZEROS ( numbers )
+    (51) expression -> . ONES ( numbers )
+    (52) expression -> . EYE ( numbers )
+    (53) expression -> . number
+    (54) expression -> . STRING
+    (55) expression -> . assignable
+    (59) expression -> . ( expression )
+    (60) expression -> . BREAK
+    (61) expression -> . CONTINUE
+    (62) expression -> . range
+    (56) assignable -> . ID
+    (57) assignable -> . matrixcellgetter
     (25) number -> . INTNUM
     (26) number -> . FLOATNUM
-    (61) range -> . expression : expression
-    (56) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
+    (63) range -> . expression : expression
+    (58) matrixcellgetter -> . ID [ INTNUM , INTNUM ]
 
     {               shift and go to state 6
     PRINT           shift and go to state 7
@@ -6095,68 +5964,68 @@ state 121
     FLOATNUM        shift and go to state 27
 
     expression                     shift and go to state 5
-    statement                      shift and go to state 124
+    statement                      shift and go to state 127
     instruction                    shift and go to state 4
     range                          shift and go to state 13
     assignable                     shift and go to state 16
     number                         shift and go to state 21
     matrixcellgetter               shift and go to state 25
 
-state 122
+state 125
 
-    (56) matrixcellgetter -> ID [ INTNUM , INTNUM ] .
+    (58) matrixcellgetter -> ID [ INTNUM , INTNUM ] .
 
-    =               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    ADDASSIGN       reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    SUBASSIGN       reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    MULASSIGN       reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    DIVASSIGN       reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    ;               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    '               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    +               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    -               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    DOTADD          reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    DOTSUB          reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    *               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    /               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    DOTMUL          reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    DOTDIV          reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    EQ              reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    NOTEQ           reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    GT              reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    LT              reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    GTEQ            reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    LTEQ            reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    :               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    ,               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    )               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    {               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    PRINT           reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    IF              reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    WHILE           reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    FOR             reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    RETURN          reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    [               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    ZEROS           reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    ONES            reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    EYE             reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    STRING          reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    (               reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    BREAK           reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    CONTINUE        reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    ID              reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    INTNUM          reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
-    FLOATNUM        reduce using rule 56 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    =               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    ADDASSIGN       reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    SUBASSIGN       reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    MULASSIGN       reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    DIVASSIGN       reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    ;               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    '               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    +               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    -               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    DOTADD          reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    DOTSUB          reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    *               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    /               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    DOTMUL          reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    DOTDIV          reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    EQ              reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    NOTEQ           reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    GT              reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    LT              reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    GTEQ            reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    LTEQ            reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    :               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    ,               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    )               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    {               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    PRINT           reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    IF              reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    WHILE           reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    FOR             reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    RETURN          reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    [               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    ZEROS           reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    ONES            reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    EYE             reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    STRING          reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    (               reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    BREAK           reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    CONTINUE        reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    ID              reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    INTNUM          reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
+    FLOATNUM        reduce using rule 58 (matrixcellgetter -> ID [ INTNUM , INTNUM ] .)
 
 
-state 123
+state 126
 
     (22) minit -> [ mrow ] , minit .
 
     ]               reduce using rule 22 (minit -> [ mrow ] , minit .)
 
 
-state 124
+state 127
 
     (4) instruction -> IF ( expression ) statement ELSE statement .
 
@@ -6298,5 +6167,5 @@ WARNING: shift/reduce conflict for LT in state 100 resolved as shift
 WARNING: shift/reduce conflict for GTEQ in state 100 resolved as shift
 WARNING: shift/reduce conflict for LTEQ in state 100 resolved as shift
 WARNING: shift/reduce conflict for : in state 100 resolved as shift
-WARNING: shift/reduce conflict for - in state 107 resolved as shift
-WARNING: shift/reduce conflict for ELSE in state 116 resolved as shift
+WARNING: shift/reduce conflict for - in state 108 resolved as shift
+WARNING: shift/reduce conflict for ELSE in state 118 resolved as shift
