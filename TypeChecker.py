@@ -62,7 +62,7 @@ class TypeChecker(NodeVisitor):
 
     def getTypeForBinOperation(self, op, arg1, arg2):
         if self.boolean_operators().__contains__(op):
-            return self.check_boolean_operation(arg1, arg2)
+            return self.check_boolean_operation(op, arg1, arg2)
         elif self.scalar_operators().__contains__(op):
             return self.check_numeric_bin_operation(op, arg1, arg2)
         elif self.matrix_operators().__contains__(op):
@@ -82,12 +82,14 @@ class TypeChecker(NodeVisitor):
     def assign_operators(self):
         return [BinOperator.ADDASSIGN, BinOperator.SUBASSIGN, BinOperator.MULASSIGN, BinOperator.DIVASSIGN]
 
-    def check_boolean_operation(self, arg1, arg2):
+    def check_boolean_operation(self, op, arg1, arg2):
         if isinstance(arg1, Scalar) and isinstance(arg2, Scalar):
             return Boolean()
-        elif isinstance(arg1, Matrix) and isinstance(arg2, Matrix):
+        elif isinstance(arg1, Matrix) and isinstance(arg2, Matrix) and (op == BinOperator.EQ or op == BinOperator.NOTEQ):
             return Boolean()
         elif isinstance(arg1, String) and isinstance(arg2, String):
+            return Boolean()
+        elif isinstance(arg1, Boolean) and isinstance(arg2, Boolean) and (op == BinOperator.EQ or op == BinOperator.NOTEQ):
             return Boolean()
         else:
             return None
@@ -288,7 +290,7 @@ class TypeChecker(NodeVisitor):
         for row in node.value:
             newsize = len(row)
             if oldsize is not None and oldsize != newsize:
-                self.error(f"Rows of matrix don't have equal lenghts, found rows of size {oldsize} and {newsize}", row[0].lineno)
+                self.error(f"Rows of matrix don't have equal lenghts, found rows of size {oldsize} and {newsize}", row[0].lineno if len(row) > 0 else node.lineno)
             oldsize = len(row)
             for v in row:
                 t = self.visit(v)
