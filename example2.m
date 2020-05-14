@@ -2,6 +2,8 @@
 # binary operators
 # transposition
 
+# Pretty much every line is ERROR
+
 C = -A;     # assignemnt with unary expression
 C = B' ;    # assignemnt with matrix transpose
 C = A+B ;   # assignemnt with binary addition

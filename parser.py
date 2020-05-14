@@ -26,7 +26,7 @@ def p_error(p):
 
 def p_start(p):
     """start : statements"""
-    p[0] = Root(p[1])
+    p[0] = Root(p[1], p.lineno(1))
 
 def p_statement_instruction(p):
     """statement : instruction"""
@@ -36,21 +36,21 @@ def p_instruction_if(p):
     """instruction : IF '(' expression ')' statement
                    | IF '(' expression ')' statement ELSE statement"""
     if len(p)>6:
-        p[0] = If(p[3], p[5], p[7])
+        p[0] = If(p[3], p[5], p[7], p.lineno(1))
     else:
-        p[0] = If(p[3], p[5], None)
+        p[0] = If(p[3], p[5], None, p.lineno(1))
 
 def p_instruction_while(p):
     """instruction : WHILE '(' expression ')' statement"""
-    p[0] = While(p[3], p[5])
+    p[0] = While(p[3], p[5], p.lineno(1))
 
 def p_expression_return(p):
     """expression : RETURN expression"""
-    p[0] = Return(p[2])
+    p[0] = Return(p[2], p.lineno(1))
 
 def p_instruction_for(p):
     """instruction : FOR ID '=' range statement"""
-    p[0] = For(Assignment(Variable(p[2]), p[4]), p[5])
+    p[0] = For(Assignment(Variable(p[2], p.lineno(2)), p[4], p.lineno(3)), p[5], p.lineno(1))
 
 def p_statements(p):
     """statements : statement
@@ -66,11 +66,11 @@ def p_statement_expression(p):
 
 def p_statement_statements(p):
     """statement : '{' statements '}'"""
-    p[0] = Statements(p[2])
+    p[0] = Statements(p[2], p.lineno(1))
 
 def p_statement_print(p):
     """statement : PRINT expressions ';'"""
-    p[0] = Print(Expressions(p[2]))
+    p[0] = Print(Expressions(p[2], p.lineno(1)), p.lineno(1))
 
 def p_expressions(p):
     """expressions : expression
@@ -84,9 +84,9 @@ def p_mexpression_minit(p):
     """expression : '[' minit ']'
                   | '[' ']'"""
     if len(p)>3:
-        p[0] = Matrix(p[2])
+        p[0] = Matrix(p[2], p.lineno(1))
     else:
-        p[0] = Matrix([[]])
+        p[0] = Matrix([[]], p.lineno(1))
 
 def p_minit(p):
     """minit : mrow ';'
@@ -115,23 +115,23 @@ def p_mrow(p):
 
 def p_number_intnum(p):
     """number : INTNUM"""
-    p[0] = IntNum(p[1])
+    p[0] = IntNum(p[1], p.lineno(1))
 
 def p_number_floatnum(p):
     """number : FLOATNUM"""
-    p[0] = FloatNum(p[1])
+    p[0] = FloatNum(p[1], p.lineno(1))
 
 def p_expression_assignment(p):
     """expression : assignable '=' expression"""
-    p[0] = Assignment(p[1], p[3])
+    p[0] = Assignment(p[1], p[3], p.lineno(2))
 
 def p_expression_unaryminus(p):
     """expression : '-' expression"""
-    p[0] = UnaryMinus(p[2])
+    p[0] = UnaryMinus(p[2], p.lineno(1))
 
 def p_expression_matrixtranspose(p):
     """expression : expression \"'\""""
-    p[0] = MatrixTranspose(p[1])
+    p[0] = MatrixTranspose(p[1], p.lineno(2))
 
 def p_expression_fancy_assign(p):
     """expression : assignable ADDASSIGN expression
@@ -146,7 +146,7 @@ def p_expression_fancy_assign(p):
         op = BinOperator.MULASSIGN
     else:
         op = BinOperator.DIVASSIGN
-    p[0] = BinOperation(p[1], op, p[3])
+    p[0] = BinOperation(p[1], op, p[3], p.lineno(2))
 
 def p_expression_sum(p):
     """expression : expression '+' expression
@@ -161,7 +161,7 @@ def p_expression_sum(p):
         op = BinOperator.DOTADD
     else:
         op = BinOperator.DOTSUB
-    p[0] = BinOperation(p[1], op, p[3])
+    p[0] = BinOperation(p[1], op, p[3], p.lineno(2))
 
 def p_expression_mul(p):
     """expression : expression '*' expression
@@ -176,7 +176,7 @@ def p_expression_mul(p):
         op = BinOperator.DOTMUL
     else:
         op = BinOperator.DOTDIV
-    p[0] = BinOperation(p[1], op, p[3])
+    p[0] = BinOperation(p[1], op, p[3], p.lineno(2))
 
 def p_expression_cond(p):
     """expression : expression EQ expression
@@ -197,7 +197,7 @@ def p_expression_cond(p):
         op = BinOperator.GTEQ
     else:
         op = BinOperator.LTEQ
-    p[0] = BinOperation(p[1], op, p[3])
+    p[0] = BinOperation(p[1], op, p[3], p.lineno(2))
 
 def p_numbers(p):
     """numbers : number
@@ -212,11 +212,11 @@ def p_expression_function(p):
                   | ONES '(' numbers ')'
                   | EYE '(' numbers ')'"""
     if p[1] == 'zeros':
-        p[0] = Zeros(Numbers(p[3]))
+        p[0] = Zeros(Numbers(p[3], p.lineno(3)), p.lineno(1))
     elif p[1] == 'ones':
-        p[0] = Ones(Numbers(p[3]))
+        p[0] = Ones(Numbers(p[3], p.lineno(3)), p.lineno(1))
     else:
-        p[0] = Eye(Numbers(p[3]))
+        p[0] = Eye(Numbers(p[3], p.lineno(3)), p.lineno(1))
 
 def p_expression_number(p):
     """expression : number"""
@@ -224,7 +224,7 @@ def p_expression_number(p):
 
 def p_expression_string(p):
     """expression : STRING"""
-    p[0] = String(p[1])
+    p[0] = String(p[1], p.lineno(1))
 
 def p_expression_assignable(p):
     """expression : assignable"""
@@ -232,7 +232,7 @@ def p_expression_assignable(p):
 
 def p_expression_id(p):
     """assignable : ID"""
-    p[0] = Variable(p[1])
+    p[0] = Variable(p[1], p.lineno(1))
 
 def p_assignable_matrixcellgetter(p):
     """assignable : matrixcellgetter"""
@@ -240,7 +240,7 @@ def p_assignable_matrixcellgetter(p):
 
 def p_matrixcellgetter(p):
     """matrixcellgetter : ID '[' INTNUM ',' INTNUM ']'"""
-    p[0] = MatrixCellGetter(p[1], p[3], p[5])
+    p[0] = MatrixCellGetter(p[1], p[3], p[5], p.lineno(1))
 
 def p_expression_group(p):
     """expression : '(' expression ')'"""
@@ -248,11 +248,11 @@ def p_expression_group(p):
 
 def p_expression_break(p):
     """expression : BREAK"""
-    p[0] = Break()
+    p[0] = Break(p.lineno(1))
 
 def p_expression_continue(p):
     """expression : CONTINUE"""
-    p[0] = Continue()
+    p[0] = Continue(p.lineno(1))
 
 def p_expression_range(p):
     """expression : range"""
@@ -260,6 +260,6 @@ def p_expression_range(p):
 
 def p_range(p):
     """range : expression ':' expression"""
-    p[0] = Range(p[1], p[3])
+    p[0] = Range(p[1], p[3], p.lineno(1))
 
 parser = yacc.yacc()

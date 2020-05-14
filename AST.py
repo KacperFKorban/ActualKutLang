@@ -4,7 +4,8 @@ class Node(object):
     pass
 
 class Root(Node):
-    def __init__(self, children):
+    def __init__(self, children, lineno):
+        self.lineno = lineno
         self.children = children
     def __str__(self):
         return f"Root({str(self.children)})"
@@ -12,7 +13,8 @@ class Root(Node):
         return self.__str__()
 
 class BinOperation(Node):
-    def __init__(self, leftOperand, operator, rightOperand):
+    def __init__(self, leftOperand, operator, rightOperand, lineno):
+        self.lineno = lineno
         self.leftOperand = leftOperand
         self.rightOperand = rightOperand
         self.operator = operator
@@ -22,7 +24,8 @@ class BinOperation(Node):
         return self.__str__()
 
 class Assignment(Node):
-    def __init__(self, id, value):
+    def __init__(self, id, value, lineno):
+        self.lineno = lineno
         self.id = id
         self.value = value
     def __str__(self):
@@ -31,7 +34,8 @@ class Assignment(Node):
         return self.__str__()
 
 class Variable(Node):
-    def __init__(self, id):
+    def __init__(self, id, lineno):
+        self.lineno = lineno
         self.id = id
     def __str__(self):
         return f"Variable({self.id})"
@@ -39,7 +43,8 @@ class Variable(Node):
         return self.__str__()
 
 class If(Node):
-    def __init__(self, cond, statements, elses):
+    def __init__(self, cond, statements, elses, lineno):
+        self.lineno = lineno
         self.cond = cond
         self.statements = statements
         self.elses = elses
@@ -49,7 +54,8 @@ class If(Node):
         return self.__str__()
 
 class While(Node):
-    def __init__(self, cond, statements):
+    def __init__(self, cond, statements, lineno):
+        self.lineno = lineno
         self.cond = cond
         self.statements = statements
     def __str__(self):
@@ -58,7 +64,8 @@ class While(Node):
         return self.__str__()
 
 class For(Node):
-    def __init__(self, assignment, statements):
+    def __init__(self, assignment, statements, lineno):
+        self.lineno = lineno
         self.assignment = assignment
         self.statements = statements
     def __str__(self):
@@ -67,7 +74,8 @@ class For(Node):
         return self.__str__()
 
 class Print(Node):
-    def __init__(self, expressions):
+    def __init__(self, expressions, lineno):
+        self.lineno = lineno
         self.expressions = expressions
     def __str__(self):
         return f"Print({self.expressions})"
@@ -75,7 +83,8 @@ class Print(Node):
         return self.__str__()
 
 class Break(Node):
-    def __init__(self):
+    def __init__(self, lineno):
+        self.lineno = lineno
         pass
     def __str__(self):
         return f"Break"
@@ -83,7 +92,8 @@ class Break(Node):
         return self.__str__()
 
 class Continue(Node):
-    def __init__(self):
+    def __init__(self, lineno):
+        self.lineno = lineno
         pass
     def __str__(self):
         return f"Continue"
@@ -91,7 +101,8 @@ class Continue(Node):
         return self.__str__()
 
 class Return(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"Return({self.value})"
@@ -99,7 +110,8 @@ class Return(Node):
         return self.__str__()
 
 class IntNum(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"IntNum({self.value})"
@@ -107,7 +119,8 @@ class IntNum(Node):
         return self.__str__()
 
 class FloatNum(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"FloatNum({self.value})"
@@ -115,7 +128,8 @@ class FloatNum(Node):
         return self.__str__()
 
 class Numbers(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"Numbers({self.value})"
@@ -123,7 +137,8 @@ class Numbers(Node):
         return self.__str__()
 
 class String(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"String({self.value})"
@@ -131,7 +146,8 @@ class String(Node):
         return self.__str__()
 
 class Matrix(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"Matrix({self.value})"
@@ -139,7 +155,8 @@ class Matrix(Node):
         return self.__str__()
 
 class Zeros(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"Zeros({self.value})"
@@ -147,7 +164,8 @@ class Zeros(Node):
         return self.__str__()
 
 class Ones(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"Ones({self.value})"
@@ -155,7 +173,8 @@ class Ones(Node):
         return self.__str__()
 
 class Eye(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"Eye({self.value})"
@@ -163,7 +182,8 @@ class Eye(Node):
         return self.__str__()
 
 class Range(Node):
-    def __init__(self, start, end):
+    def __init__(self, start, end, lineno):
+        self.lineno = lineno
         self.start = start
         self.end = end
     def __str__(self):
@@ -172,7 +192,8 @@ class Range(Node):
         return self.__str__()
 
 class UnaryMinus(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"UnaryMinus({self.value})"
@@ -180,7 +201,8 @@ class UnaryMinus(Node):
         return self.__str__()
 
 class MatrixTranspose(Node):
-    def __init__(self, value):
+    def __init__(self, value, lineno):
+        self.lineno = lineno
         self.value = value
     def __str__(self):
         return f"MatrixTranspose({self.value})"
@@ -188,7 +210,8 @@ class MatrixTranspose(Node):
         return self.__str__()
 
 class MatrixCellGetter(Node):
-    def __init__(self, id, rownum, colnum):
+    def __init__(self, id, rownum, colnum, lineno):
+        self.lineno = lineno
         self.id = id
         self.rownum = rownum
         self.colnum = colnum
@@ -198,7 +221,8 @@ class MatrixCellGetter(Node):
         return self.__str__()
 
 class Statements(Node):
-    def __init__(self, values):
+    def __init__(self, values, lineno):
+        self.lineno = lineno
         self.values = values
     def __str__(self):
         return f"Statements({self.values})"
@@ -206,7 +230,8 @@ class Statements(Node):
         return self.__str__()
 
 class Expressions(Node):
-    def __init__(self, values):
+    def __init__(self, values, lineno):
+        self.lineno = lineno
         self.values = values
     def __str__(self):
         return f"Expressions({self.values})"

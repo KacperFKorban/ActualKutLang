@@ -8,13 +8,13 @@ for i = 1:N {
     }
 }
 
-while(k>0) {
-    if(k<5)
+while(k>0) { # ERROR
+    if(k<5) # ERROR
         i = 1;
-    else if(k<10)
+    else if(k<10) # ERROR
         i = 2;   
     else
         i = 3;
     
-    k = k - 1;
+    k = k - 1; # ERROR
 }

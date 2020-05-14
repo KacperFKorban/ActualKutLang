@@ -21,4 +21,4 @@ if __name__ == '__main__':
     #     print()
     
     typeChecker = TypeChecker()   
-    typeChecker.visit(ast)
+    print(typeChecker.visit(ast))

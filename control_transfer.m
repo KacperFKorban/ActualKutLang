@@ -1,11 +1,11 @@
 
 x=0;
 
-continue;
+continue;  # ERROR
 
 return x;
 
-break;
+break;  # ERROR
 
 return x+1;
 

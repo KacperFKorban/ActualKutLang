@@ -5,6 +5,8 @@ from SymbolTable import *
 class NodeVisitor(object):
 
     def visit(self, node):
+        if node is None:
+            return NotAttempted()
         method = 'visit_' + node.__class__.__name__
         visitor = getattr(self, method, self.generic_visit)
         return visitor(node)
@@ -22,8 +24,33 @@ class NodeVisitor(object):
                 elif isinstance(child, AST.Node):
                     self.visit(child)
 
+class TypeCheckerResult:
+    pass
+
+class Success(TypeCheckerResult):
+    def __init__(self, warns):
+        self.warns = warns
+    def __repr__(self):
+        return f"SUCCESS\n{self.warns} warning{'s' if self.warns != 1 else ''} found"
+
+class Failure(TypeCheckerResult):
+    def __init__(self, errors, warns):
+        self.errors = errors
+        self.warns = warns
+    def __repr__(self):
+        return f"FAILED\n{self.errors} error{'s' if self.errors != 1 else ''} and {self.warns} warning{'s' if self.warns != 1 else ''} found"
+
+class NotAttempted(TypeCheckerResult):
+    def __repr__(self):
+        return ""
 
 class TypeChecker(NodeVisitor):
+
+    def __init__(self):
+        self.symbolTable = SymbolTable()
+        self.loopsCount = 0
+        self.errors = 0
+        self.warns = 0
 
     def assign_op_dict(self):
         return {
@@ -96,11 +123,6 @@ class TypeChecker(NodeVisitor):
         else:
             return None
 
-    def __init__(self):
-        self.symbolTable = SymbolTable()
-        self.loopsCount = 0
-        self.errors = 0
-
     def new_scope(self):
         old_symbolTable = self.symbolTable
         self.symbolTable = SymbolTable()
@@ -109,25 +131,55 @@ class TypeChecker(NodeVisitor):
     def pop_scope(self):
         self.symbolTable = self.symbolTable.parent
 
-    def error(self, msg):
+    def error(self, msg, lineno):
         self.errors += 1
-        print(f"ERROR: {msg}")
+        print(f"ERROR at line {lineno}: {msg}")
+
+    def warn(self, msg, lineno):
+        self.warns += 1
+        print(f"WARN at line {lineno}: {msg}")
+
+    def is_expressions(self, t, e):
+        exprs = [
+            AST.For,
+            AST.Assignment,
+            AST.If,
+            AST.For,
+            AST.While,
+            AST.Print,
+            AST.Statements,
+            AST.Break,
+            AST.Continue,
+            AST.Return
+        ]
+        if exprs.__contains__(t):
+            return False
+        elif t == AST.BinOperation and self.assign_operators().__contains__(e.operator):
+            return False
+        else:
+            return True
 
     def visit_Root(self, node):
         for c in node.children:
-            self.visit(c)
+            t = self.visit(c)
+            if self.is_expressions(type(c), c) and t is not None:
+                self.warn(f"Unused expression of type {t}", c.lineno)
+        if self.errors == 0:
+            return Success(self.warns)
+        else:
+            return Failure(self.errors, self.warns)
 
     def visit_BinOperation(self, node):
         if self.assign_operators().__contains__(node.operator):
-            desugarized = AST.Assignment(node.leftOperand, AST.BinOperation(node.leftOperand, self.assign_op_dict()[node.operator], node.rightOperand))
+            desugarized = AST.Assignment(node.leftOperand, AST.BinOperation(node.leftOperand, self.assign_op_dict()[node.operator], node.rightOperand, node.lineno), node.lineno)
             return self.visit(desugarized)
         else:
             type1 = self.visit(node.leftOperand)
             type2 = self.visit(node.rightOperand)
             op    = node.operator
             res_type = self.getTypeForBinOperation(op, type1, type2)
-            if res_type == None:
-                self.error(f"Type mismatch for operation {op}, Arg1: {type1}, Arg2: {type2}")
+            if res_type is None and type1 is not None and type2 is not None:
+                self.error(f"Type mismatch for operation {op} found: {type1}, {type2}", node.lineno)
                 return None
             else:
                 return res_type
@@ -147,14 +199,14 @@ class TypeChecker(NodeVisitor):
             if type == Range():
                 type = Integer()
             if not isinstance(type, Scalar):
-                self.error(f"Cannot assign non scalar value to matrix cell, found {type}")
+                self.error(f"Cannot assign non scalar value to matrix element, but found {type}", node.lineno)
                 return None
             return type
 
     def visit_Variable(self, node):
         v = self.symbolTable.get(node.id)
         if v is None:
-            self.error(f"Call to variable {node.id} before assignment")
+            self.error(f"Call to variable {node.id} before assignment", node.lineno)
         else:
             return v.type
         
@@ -162,29 +214,37 @@ class TypeChecker(NodeVisitor):
         c_type = self.visit(node.cond)
         self.new_scope()
         s_type = self.visit(node.statements)
+        if self.is_expressions(type(node.statements), node.statements)  and s_type is not None:
+            self.warn(f"Unused expression of type {s_type}", node.statements.lineno)
         self.pop_scope()
         if node.elses:
             self.new_scope()
             e_type = self.visit(node.elses)
+            if self.is_expressions(type(node.elses), node.elses)  and e_type is not None:
+                self.warn(f"Unused expression of type {e_type}", node.elses.lineno)
             self.pop_scope()
-        if c_type != Boolean():
-            self.error(f"If condition should be a boolean")
+        if c_type != Boolean() and c_type is not None:
+            self.error(f"If condition must be a Boolean, but found {c_type}", node.cond.lineno)
 
     def visit_While(self, node):
         self.loopsCount += 1
         self.new_scope()
         c_type = self.visit(node.cond)
         s_type = self.visit(node.statements)
+        if self.is_expressions(type(node.statements), node.statements)  and s_type is not None:
+            self.warn(f"Unused expression of type {s_type}", node.statements.lineno)
         self.pop_scope()
         self.loopsCount -= 1
-        if c_type != Boolean():
-            self.error(f"While condition should be a boolean")
+        if c_type != Boolean() and c_type is not None:
+            self.error(f"While condition must be a Boolean, {c_type}", node.cond.lineno)
 
     def visit_For(self, node):
         self.loopsCount += 1
         self.new_scope()
         a_type = self.visit(node.assignment)
         s_type = self.visit(node.statements)
+        if self.is_expressions(type(node.statements), node.statements) and s_type is not None:
+            self.warn(f"Unused expression of type {s_type}", node.statements.lineno)
         self.pop_scope()
         self.loopsCount -= 1
         
@@ -193,12 +253,12 @@ class TypeChecker(NodeVisitor):
 
     def visit_Break(self, node):
         if self.loopsCount == 0:
-            self.error("Break statement can only be used in a loop")
+            self.error("Break statement can only be used in a loop", node.lineno)
         return None
 
     def visit_Continue(self, node):
         if self.loopsCount == 0:
-            self.error("Continue statement can only be used in a loop")
+            self.error("Continue statement can only be used in a loop", node.lineno)
         return None
 
     def visit_Return(self, node):
@@ -214,10 +274,8 @@ class TypeChecker(NodeVisitor):
         types = map(lambda x: self.visit(x), node.value)
         type = None
         for t in types:
-            if not type:
+            if type == Integer() or type == None:
                 type = t
-            if t != type:
-                self.error(f"Type mismatch {type} {t}")
         return type
 
 
@@ -230,52 +288,58 @@ class TypeChecker(NodeVisitor):
         for row in node.value:
             newsize = len(row)
             if oldsize is not None and oldsize != newsize:
-                self.error(f"Rows of matrix don't have equal lenghts: {oldsize} {newsize}")
+                self.error(f"Rows of matrix don't have equal lenghts, found rows of size {oldsize} and {newsize}", row[0].lineno)
             oldsize = len(row)
             for v in row:
                 t = self.visit(v)
                 if type and type != t and t != None and (not isinstance(type, Scalar) or not isinstance(t, Scalar)):
-                    self.error(f"Mismatched types in matrix definition {type}, {t}")
+                    self.error(f"Mismatched types in matrix definition {type}, {t}", v.lineno)
                 if type == Integer() or type == None:
                     type = t
         if type != Integer() and type != Float() and type != None:
-            self.error(f"Matrixes can only contain Numeric values, but found {type}")
+            self.error(f"Matrixes can only contain Numeric values, but found {type}", node.lineno)
         if oldsize == 0 and len(node.value) == 1:
             return Matrix(0, 0, Integer())
         else:
             return Matrix(len(node.value), oldsize, type)
 
     def visit_Zeros(self, node):
-        if self.visit(node.value) != Integer():
-            self.error("Zeros parameters should be integers")
+        t = self.visit(node.value)
+        if t != Integer():
+            self.error(f"Zeros parameters should be Integers, but found {t}", node.lineno)
+            return None
         vals = node.value.value if node.value.value is not None else []
         vals = list(map(lambda x: x.value, vals))
         if len(vals) != 1 and len(vals) != 2:
-            self.error("Zeros must take one or two integer arguments")
+            self.error(f"Zeros must take one or two integer arguments, but found {len(vals)}", node.lineno)
         if len(vals) == 1:
             return Matrix(vals[0], vals[0], Integer())
         else:
             return Matrix(vals[0], vals[1], Integer())
 
     def visit_Ones(self, node):
-        if self.visit(node.value) != Integer():
-            self.error("Ones parameters should be integers")
+        t = self.visit(node.value)
+        if t != Integer():
+            self.error(f"Ones parameters should be Integers, but found {t}", node.lineno)
+            return None
         vals = node.value.value if node.value.value is not None else []
         vals = list(map(lambda x: x.value, vals))
         if len(vals) != 1 and len(vals) != 2:
-            self.error("Ones must take one or two integer arguments")
+            self.error(f"Ones must take one or two integer arguments, but found {len(vals)}", node.lineno)
         if len(vals) == 1:
             return Matrix(vals[0], vals[0], Integer())
         else:
             return Matrix(vals[0], vals[1], Integer())
     
     def visit_Eye(self, node):
-        if self.visit(node.value) != Integer():
-            self.error("Eye parameters should be integers")
+        t = self.visit(node.value)
+        if t != Integer():
+            self.error(f"Eye parameters should be Integers, but found {t}", node.lineno)
+            return None
         vals = node.value.value if node.value.value is not None else []
         vals = list(map(lambda x: x.value, vals))
         if len(vals) != 1 and len(vals) != 2:
-            self.error("Eye must take one or two integer arguments")
+            self.error(f"Eye must take one or two integer arguments, but found {len(vals)}", node.lineno)
         if len(vals) == 1:
             return Matrix(vals[0], vals[0], Integer())
         else:
@@ -285,34 +349,40 @@ class TypeChecker(NodeVisitor):
         exp1 = self.visit(node.start)
         exp2 = self.visit(node.end)
         if (exp1 != Integer() and exp1) or (exp2 != Integer() and exp2):
-            self.error(f"Range takes only integers as parameters {exp1} {exp2}")
+            self.error(f"Range takes only integers as parameters, but found {exp1} {exp2}", node.lineno)
         return Integer()
 
     def visit_UnaryMinus(self, node):
         type = self.visit(node.value)
-        if not isinstance(type, Numeric):
-            self.error(f"Unary minus takes as argument only numeric types, but found {type}")
+        if not isinstance(type, Numeric) and type is not None:
+            self.error(f"Unary minus takes as argument only numeric types, but found {type}", node.lineno)
         return type
 
     def visit_MatrixTranspose(self, node):
         m_type = self.visit(node.value)
-        if not isinstance(m_type, Matrix):
-            self.error(f"Matrix operator on non-matrix element of type {m_type}")
+        if not isinstance(m_type, Matrix) and m_type is not None:
+            self.error(f"Matrix transposition can only be done on matrixes, but found {m_type}", node.lineno)
+            return None
+        elif m_type is None:
             return None
         else:
             return Matrix(m_type.m, m_type.n, m_type.type)
 
     def visit_MatrixCellGetter(self, node):
         m_type = self.symbolTable.getType(node.id)
-        if not isinstance(m_type, Matrix):
-            self.error(f"Matrix operator on non-matrix element of type {m_type}")
+        if not isinstance(m_type, Matrix) and m_type is not None:
+            self.error(f"Matrix getter can only be used on a Matrix, but found {m_type}", node.lineno)
+            return None
+        elif m_type is None:
             return None
         else:
             return m_type.type
 
     def visit_Statements(self, node):
         for c in node.values:
-            self.visit(c)
+            t = self.visit(c)
+            if self.is_expressions(type(c), c):
+                self.warn(f"Unused expression of type {t}", c.lineno)
 
     def visit_Expressions(self, node):
         for e in node.values:

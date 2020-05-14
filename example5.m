@@ -2,6 +2,8 @@
 # binary operators
 # transposition
 
+# Pretty much every line is an ERROR
+
 D1 = A.+B' ; # add element-wise A with transpose of B
 D2 -= A.-B' ; # substract element-wise A with transpose of B
 D3 *= A.*B' ; # multiply element-wise A with transpose of B
