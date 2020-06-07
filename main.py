@@ -2,7 +2,8 @@ import sys
 import scanner
 import parser
 from TreePrinter import TreePrinter
-from TypeChecker import TypeChecker
+from TypeChecker import TypeChecker, Success
+from Interpreter import Interpreter
 
 if __name__ == '__main__':
 
@@ -20,5 +21,9 @@ if __name__ == '__main__':
     #     ast.printTree()
     #     print()
     
-    typeChecker = TypeChecker()   
-    print(typeChecker.visit(ast))
+    typeChecker = TypeChecker()
+    checkRes = typeChecker.visit(ast)
+    print(checkRes)
+
+    if isinstance(checkRes, Success):
+        ast.accept(Interpreter())

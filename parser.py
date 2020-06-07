@@ -48,9 +48,21 @@ def p_expression_return(p):
     """expression : RETURN expression"""
     p[0] = Return(p[2], p.lineno(1))
 
+def p_instruction_def(p):
+    """expression : '(' args ')' ARROW statement"""
+    p[0] = Def(p[2], p[5], p.lineno(4))
+
 def p_instruction_for(p):
     """instruction : FOR ID '=' range statement"""
     p[0] = For(Assignment(Variable(p[2], p.lineno(2)), p[4], p.lineno(3)), p[5], p.lineno(1))
+
+def p_args(p):
+    """args : ID
+            | args ',' ID"""
+    if len(p)>2:
+        p[0] = p[1] + [Variable(p[3], p.lineno(3))]
+    else:
+        p[0] = [Variable(p[1], p.lineno(1))]
 
 def p_statements(p):
     """statements : statement
@@ -210,13 +222,16 @@ def p_numbers(p):
 def p_expression_function(p):
     """expression : ZEROS '(' numbers ')'
                   | ONES '(' numbers ')'
-                  | EYE '(' numbers ')'"""
+                  | EYE '(' numbers ')'
+                  | ID '(' expressions ')'"""
     if p[1] == 'zeros':
         p[0] = Zeros(Numbers(p[3], p.lineno(3)), p.lineno(1))
     elif p[1] == 'ones':
         p[0] = Ones(Numbers(p[3], p.lineno(3)), p.lineno(1))
-    else:
+    elif p[1] == 'eye':
         p[0] = Eye(Numbers(p[3], p.lineno(3)), p.lineno(1))
+    else:
+        p[0] = DefCall(p[1], Expressions(p[3], p.lineno(3)), p.lineno(1))
 
 def p_expression_number(p):
     """expression : number"""
@@ -224,7 +239,7 @@ def p_expression_number(p):
 
 def p_expression_string(p):
     """expression : STRING"""
-    p[0] = String(p[1], p.lineno(1))
+    p[0] = String(p[1][1:-1], p.lineno(1))
 
 def p_expression_assignable(p):
     """expression : assignable"""
@@ -239,7 +254,7 @@ def p_assignable_matrixcellgetter(p):
     p[0] = p[1]
 
 def p_matrixcellgetter(p):
-    """matrixcellgetter : ID '[' INTNUM ',' INTNUM ']'"""
+    """matrixcellgetter : ID '[' expression ',' expression ']'"""
     p[0] = MatrixCellGetter(p[1], p[3], p[5], p.lineno(1))
 
 def p_expression_group(p):

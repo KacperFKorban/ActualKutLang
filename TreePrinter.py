@@ -76,6 +76,15 @@ class TreePrinter:
         self.assignment.printTreeWithoutOperator(indent+1)
         self.statements.printTree(indent+1)
 
+    @addToClass(AST.Def)
+    def printTree(self, indent=0):
+        self.printIndent(indent)
+        print('DEF')
+        self.printIndent(indent)
+        for arg in self.args:
+            arg.printTree(indent+1)
+        self.body.printTree(indent+1)
+
     @addToClass(AST.Print)
     def printTree(self, indent=0):
         self.printIndent(indent)
@@ -146,6 +155,12 @@ class TreePrinter:
         self.printIndent(indent)
         print('eye')
         self.value.printTree(indent+1)
+
+    @addToClass(AST.DefCall)
+    def printTree(self, indent=0):
+        self.printIndent(indent)
+        print(self.name)
+        self.args.printTree(indent+1)
 
     @addToClass(AST.Range)
     def printTree(self, indent=0):

@@ -1,7 +1,8 @@
 from enum import Enum
 
 class Node(object):
-    pass
+    def accept(self, visitor):
+        return visitor.visit(self)
 
 class Root(Node):
     def __init__(self, children, lineno):
@@ -70,6 +71,26 @@ class For(Node):
         self.statements = statements
     def __str__(self):
         return f"For({self.assignment}, {self.statements})"
+    def __repr__(self):
+        return self.__str__()
+
+class Def(Node):
+    def __init__(self, args, body, lineno):
+        self.args = args
+        self.body = body
+        self.lineno = lineno
+    def __str__(self):
+        return f"Def({self.args}, {self.body})"
+    def __repr__(self):
+        return self.__str__()
+
+class DefCall(Node):
+    def __init__(self, name, args, lineno):
+        self.name = name
+        self.args = args
+        self.lineno = lineno
+    def __str__(self):
+        return f"DefCall({self.name}, {self.args})"
     def __repr__(self):
         return self.__str__()
 

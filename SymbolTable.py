@@ -49,6 +49,12 @@ class Range(Type):
     def __repr__(self):
         return "Range"
 
+class Def(Type):
+    def __init__(self, args, res):
+        self.args = args
+        self.res = res
+    def __repr__(self):
+        return f"Def({self.args}, {self.res})"
 
 class SymbolTable(object):
 

@@ -21,6 +21,7 @@ tokens = [
     'DOTSUB',
     'DOTMUL',
     'DOTDIV',
+    'ARROW',
     'ADDASSIGN',
     'SUBASSIGN',
     'MULASSIGN',
@@ -71,6 +72,8 @@ t_ADDASSIGN = r'\+='
 t_SUBASSIGN = r'-='
 t_MULASSIGN = r'\*='
 t_DIVASSIGN = r'/='
+
+t_ARROW = r'->'
 
 def t_FLOATNUM(t):
     r'[-+]?\d*\.\d+([eE][-+]?\d+)?|[-+]?\d+\.([eE][-+]?\d+)?|[-+]?\d+[eE][-+]?\d+'

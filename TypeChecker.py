@@ -250,6 +250,14 @@ class TypeChecker(NodeVisitor):
         self.pop_scope()
         self.loopsCount -= 1
         
+    def visit_Def(self, node):
+        self.new_scope()
+        for v in node.args:
+            self.symbolTable.put(VariableSymbol(v.id, None))
+        b_type = self.visit(node.body)
+        self.pop_scope()
+        return Def(len(node.args), b_type)
+
     def visit_Print(self, node):
         return None
 
@@ -346,6 +354,13 @@ class TypeChecker(NodeVisitor):
             return Matrix(vals[0], vals[0], Integer())
         else:
             return Matrix(vals[0], vals[1], Integer())
+
+    def visit_DefCall(self, node):
+        t = self.symbolTable.get(node.name)
+        if t is not None:
+            return t.type.res
+        else:
+            return None
 
     def visit_Range(self, node):
         exp1 = self.visit(node.start)
