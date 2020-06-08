@@ -76,6 +76,13 @@ class TreePrinter:
         self.assignment.printTreeWithoutOperator(indent+1)
         self.statements.printTree(indent+1)
 
+    @addToClass(AST.Import)
+    def printTree(self, indent=0):
+        self.printIndent(indent)
+        print('IMPORT')
+        self.printIndent(indent+1)
+        print(self.value)
+
     @addToClass(AST.Def)
     def printTree(self, indent=0):
         self.printIndent(indent)

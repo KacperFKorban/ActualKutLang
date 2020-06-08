@@ -12,7 +12,8 @@ reserved = {
     'eye'      : 'EYE',
     'zeros'    : 'ZEROS',
     'ones'     : 'ONES',
-    'print'    : 'PRINT'
+    'print'    : 'PRINT',
+    'import'   : 'IMPORT'
 }
 
 tokens = [

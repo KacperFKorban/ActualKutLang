@@ -46,3 +46,7 @@ class MemoryStack:
 
     def pop(self):
         return self.memories.pop(0)
+
+    def push_back(self, memory):
+        for m in memory.memories:
+            self.memories.append(m)

@@ -249,7 +249,10 @@ class TypeChecker(NodeVisitor):
             self.warn(f"Unused expression of type {s_type}", node.statements.lineno)
         self.pop_scope()
         self.loopsCount -= 1
-        
+
+    def visit_Import(self, node):
+        pass
+
     def visit_Def(self, node):
         self.new_scope()
         for v in node.args:
@@ -357,7 +360,7 @@ class TypeChecker(NodeVisitor):
 
     def visit_DefCall(self, node):
         t = self.symbolTable.get(node.name)
-        if t is not None:
+        if t is not None and t.type is not None:
             return t.type.res
         else:
             return None

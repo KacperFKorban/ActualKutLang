@@ -8,6 +8,7 @@ import operator
 import copy
 from AST import BinOperator
 from TreePrinter import TreePrinter
+import main
 
 sys.setrecursionlimit(10000)
 
@@ -159,8 +160,9 @@ class Interpreter(object):
     def assign_operators(self):
         return [BinOperator.ADDASSIGN, BinOperator.SUBASSIGN, BinOperator.MULASSIGN, BinOperator.DIVASSIGN]
 
-    def __init__(self):
+    def __init__(self, output = True):
         self.memory = MemoryStack()
+        self.output = output
 
     binOpUtils = BinOperationUtils()
 
@@ -175,8 +177,10 @@ class Interpreter(object):
                 l.accept(self)
         except ReturnValueException as e:
             print(f"Program finished with value {e.value}")
-        # except Exception as e:
-        #     print(f"Oops an error has occured: {type(e).__name__}")
+        except Exception as e:
+            print(f"Oops an error has occured: {type(e).__name__}")
+        finally:
+            return self.memory
 
     @when(AST.BinOperation)
     def visit(self, node):
@@ -244,6 +248,11 @@ class Interpreter(object):
                 break
         self.memory.pop()
 
+    @when(AST.Import)
+    def visit(self, node):
+        m = main.run(node.value[1:-1], False)
+        self.memory.push_back(m)
+
     @when(AST.Def)
     def visit(self, node):
         return node
@@ -271,7 +280,8 @@ class Interpreter(object):
     @when(AST.Print)
     def visit(self, node):
         exprs = node.expressions.accept(self)
-        print(*exprs, sep=', ')
+        if self.output:
+            print(*exprs, sep=', ')
     
 
     @when(AST.Break)

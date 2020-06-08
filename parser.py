@@ -56,6 +56,10 @@ def p_instruction_for(p):
     """instruction : FOR ID '=' range statement"""
     p[0] = For(Assignment(Variable(p[2], p.lineno(2)), p[4], p.lineno(3)), p[5], p.lineno(1))
 
+def p_instruction_import(p):
+    """instruction : IMPORT STRING ';'"""
+    p[0] = Import(p[2], p.lineno(1))
+
 def p_args(p):
     """args : ID
             | args ',' ID"""
@@ -254,8 +258,12 @@ def p_assignable_matrixcellgetter(p):
     p[0] = p[1]
 
 def p_matrixcellgetter(p):
-    """matrixcellgetter : ID '[' expression ',' expression ']'"""
-    p[0] = MatrixCellGetter(p[1], p[3], p[5], p.lineno(1))
+    """matrixcellgetter : ID '[' expression ',' expression ']'
+                        | ID '[' expression ']'"""
+    if p[4] == ',':
+        p[0] = MatrixCellGetter(p[1], p[3], p[5], p.lineno(1))
+    else:
+        p[0] = MatrixCellGetter(p[1], IntNum(0, p.lineno(1)), p[3], p.lineno(1))
 
 def p_expression_group(p):
     """expression : '(' expression ')'"""
