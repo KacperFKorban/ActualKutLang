@@ -1,5 +1,3 @@
-import "stdlib.m";
-
 print "XD";
 
 print abs(-1);

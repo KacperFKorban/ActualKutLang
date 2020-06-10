@@ -106,29 +106,70 @@ class BinOperationUtils():
         return determinant
 
     def dotadd(self, a, b):
-        if isinstance(a, list):
+        if isinstance(a, list) and not isinstance(b, list):
             return list(map(lambda l: list(map(lambda x: x + b, l)), a))
-        else:
+        elif not isinstance(a, list) and isinstance(b, list):
             return list(map(lambda l: list(map(lambda x: a + x, l)), b))
+        else:
+            return self.dotop(self.add, a, b)
 
     def dotsub(self, a, b):
-        if isinstance(a, list):
+        if isinstance(a, list) and not isinstance(b, list):
             return list(map(lambda l: list(map(lambda x: x - b, l)), a))
-        else:
+        elif not isinstance(a, list) and isinstance(b, list):
             return list(map(lambda l: list(map(lambda x: a - x, l)), b))
+        else:
+            return self.dotop(self.sub, a, b)
 
     def dotmul(self, a, b):
-        if isinstance(a, list):
+        if isinstance(a, list) and not isinstance(b, list):
             return list(map(lambda l: list(map(lambda x: x * b, l)), a))
-        else:
+        elif not isinstance(a, list) and isinstance(b, list):
             return list(map(lambda l: list(map(lambda x: a * x, l)), b))
+        else:
+            return self.dotop(self.mul, a, b)
 
     def dotdiv(self, a, b):
-        if isinstance(a, list):
+        if isinstance(a, list) and not isinstance(b, list):
             return list(map(lambda l: list(map(lambda x: x / b, l)), a))
-        else:
+        elif not isinstance(a, list) and isinstance(b, list):
             return list(map(lambda l: list(map(lambda x: a / x, l)), b))
+        else:
+            return self.dotop(self.div, a, b)
 
+    def dotop(self, f, a, b):
+        if len(a) == len(b) and ((len(a) == 0 or len(b) == 0) or (len(a[0]) == len(b[0]))):
+            if len(a) == 0 or len(b) == 0:
+                return [[]]
+            res1 = copy.deepcopy(a)
+            for i in range(len(a)):
+                for j in range(len(a[i])):
+                    res1[i][j] = f(a[i][j], b[i][j])
+            return res1
+        elif len(b[0]) == 1 or len(a[0]) == 1 or len(b) == 1 or len(a) == 1:
+            if len(a[0]) == 1:
+                changed = copy.deepcopy(a)
+                for i in range(len(a)):
+                    for j in range(len(b[0]) - 1):
+                        changed[i].append(changed[i][0])
+                return self.dotop(f,changed,b)
+            elif len(b[0]) == 1:
+                changed = copy.deepcopy(b)
+                for i in range(len(b)):
+                    for j in range(len(a[0]) - 1):
+                        changed[i].append(changed[i][0])
+                return self.dotop(f, a, changed)
+            elif len(a) ==1:
+                changed = copy.deepcopy(a)
+                for i in range(len(b) - 1):
+                    changed.append(a[0])
+                return self.dotop(f, changed, b)
+            else:
+                changed = copy.deepcopy(b)
+                for i in range(len(a) - 1):
+                    changed.append(b[0])
+                return self.dotop(f, a, changed)
+        
     def eq(self, a, b):
         return a.__str__() == b.__str__()
 
@@ -178,6 +219,7 @@ class Interpreter(object):
         except ReturnValueException as e:
             print(f"Program finished with value {e.value}")
         except Exception as e:
+            
             print(f"Oops an error has occured: {type(e).__name__}")
         finally:
             return self.memory
@@ -201,10 +243,10 @@ class Interpreter(object):
             m[node.id.rownum.accept(self)][node.id.colnum.accept(self)] = val
             self.memory.set(node.id.id, m)
         elif isinstance(node.value, AST.Def):
-            self.memory.set(node.id.id, (val, copy.deepcopy(self.memory)))
-            self.memory.set(node.id.id, (val, copy.deepcopy(self.memory)))
+            self.memory.set(node.id.id, (val[0], copy.deepcopy(self.memory)))
+            self.memory.set(node.id.id, (val[0], copy.deepcopy(self.memory)))
         else:
-            self.memory.set(node.id.id, val)
+            self.memory.set(node.id.id, copy.deepcopy(val))
         return val
 
     @when(AST.Variable)
@@ -248,14 +290,9 @@ class Interpreter(object):
                 break
         self.memory.pop()
 
-    @when(AST.Import)
-    def visit(self, node):
-        m = main.run(node.value[1:-1], False)
-        self.memory.push_back(m)
-
     @when(AST.Def)
     def visit(self, node):
-        return node
+        return (node, copy.deepcopy(self.memory))
 
     @when(AST.DefCall)
     def visit(self, node):

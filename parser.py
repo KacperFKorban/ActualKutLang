@@ -56,10 +56,6 @@ def p_instruction_for(p):
     """instruction : FOR ID '=' range statement"""
     p[0] = For(Assignment(Variable(p[2], p.lineno(2)), p[4], p.lineno(3)), p[5], p.lineno(1))
 
-def p_instruction_import(p):
-    """instruction : IMPORT STRING ';'"""
-    p[0] = Import(p[2], p.lineno(1))
-
 def p_args(p):
     """args : ID
             | args ',' ID"""

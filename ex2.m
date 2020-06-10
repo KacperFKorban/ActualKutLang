@@ -7,4 +7,10 @@ fib = (x) -> {
   }
 };
 
+print 1, fib(1);
 
+print 4, fib(4);
+
+print 5, fib(5);
+
+print 6, fib(6);

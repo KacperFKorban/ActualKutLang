@@ -120,6 +120,12 @@ class TypeChecker(NodeVisitor):
     def check_matrix_bin_operation(self, op, arg1, arg2):
         if isinstance(arg1, Matrix) and isinstance(arg2, Matrix) and arg1.equals(arg2):
             return Matrix(arg1.n, arg1.m, arg1.getCommonType(arg2))
+        elif isinstance(arg1, Matrix) and isinstance(arg2, Matrix) and (arg1.n == arg2.n) and (arg1.m == 1 or arg2.m == 1):
+            return Matrix(max(arg1.n, arg2.n), max(arg1.m, arg2.m), arg1.getCommonType(arg2))
+        elif isinstance(arg1, Matrix) and isinstance(arg2, Matrix) and (arg1.m == arg2.m) and (arg1.n == 1 or arg2.n == 1):
+            return Matrix(max(arg1.n, arg2.n), max(arg1.m, arg2.m), arg1.getCommonType(arg2))
+        elif isinstance(arg1, Matrix) and isinstance(arg2, Matrix) and ((arg1.n == 1 and arg2.m == 1) or (arg2.n == 1 and arg1.m == 1)):
+            return Matrix(max(arg1.n, arg2.n), max(arg1.m, arg2.m), arg1.getCommonType(arg2))
         elif (isinstance(arg1, Scalar) and isinstance(arg2, Matrix)) or (isinstance(arg1, Matrix) and isinstance(arg2, Scalar)):
             return arg1 if isinstance(arg1, Matrix) else arg2
         else:
@@ -200,7 +206,7 @@ class TypeChecker(NodeVisitor):
             type = self.visit(node.value)
             if type == Range():
                 type = Integer()
-            if not isinstance(type, Scalar):
+            if not isinstance(type, Scalar) and type is not None:
                 self.error(f"Cannot assign non scalar value to matrix element, but found {type}", node.lineno)
                 return None
             return type
@@ -243,7 +249,6 @@ class TypeChecker(NodeVisitor):
     def visit_For(self, node):
         self.loopsCount += 1
         self.new_scope()
-        print(node.assignment)
         self.symbolTable.put(VariableSymbol(node.assignment.id.id, Integer()))
         a_type = self.visit(node.assignment)
         s_type = self.visit(node.statements)
@@ -251,9 +256,6 @@ class TypeChecker(NodeVisitor):
             self.warn(f"Unused expression of type {s_type}", node.statements.lineno)
         self.pop_scope()
         self.loopsCount -= 1
-
-    def visit_Import(self, node):
-        return None
 
     def visit_Def(self, node):
         self.new_scope()
@@ -365,6 +367,8 @@ class TypeChecker(NodeVisitor):
         t = self.symbolTable.get(node.name)
         if t is not None and t.type is not None:
             return t.type.res
+        elif t is None:
+            self.warn(f"Call to function {node.name} before assignment (If it's not a recursion call, then It will probably cause a runtime error.)", node.lineno)
         else:
             return None
 
