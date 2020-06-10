@@ -193,7 +193,7 @@ class TypeChecker(NodeVisitor):
             type = self.visit(node.value)
             if type == Range():
                 type = Integer()
-            self.symbolTable.put(VariableSymbol(id, type))
+            self.symbolTable.set(VariableSymbol(id, type))
             return type
         else:
             v_type = self.visit(node.id)
@@ -243,6 +243,8 @@ class TypeChecker(NodeVisitor):
     def visit_For(self, node):
         self.loopsCount += 1
         self.new_scope()
+        print(node.assignment)
+        self.symbolTable.put(VariableSymbol(node.assignment.id.id, Integer()))
         a_type = self.visit(node.assignment)
         s_type = self.visit(node.statements)
         if self.is_expressions(type(node.statements), node.statements) and s_type is not None:
@@ -251,7 +253,7 @@ class TypeChecker(NodeVisitor):
         self.loopsCount -= 1
 
     def visit_Import(self, node):
-        pass
+        return None
 
     def visit_Def(self, node):
         self.new_scope()
@@ -262,6 +264,7 @@ class TypeChecker(NodeVisitor):
         return Def(len(node.args), b_type)
 
     def visit_Print(self, node):
+        self.visit(node.expressions)
         return None
 
     def visit_Break(self, node):

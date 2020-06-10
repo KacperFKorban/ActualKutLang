@@ -62,8 +62,20 @@ class SymbolTable(object):
         self.parent = None
         self.scope = {}
 
+    def set(self, symbol):
+        if self.get(symbol.name) is None:
+            self.scope[symbol.name] = symbol
+        else:
+            self.update_up(symbol)
+
     def put(self, symbol):
         self.scope[symbol.name] = symbol
+
+    def update_up(self, symbol):
+        if self.scope.get(symbol.name) is not None:
+            self.put(symbol)
+        else:
+            self.parent.update_up(symbol)
 
     def get(self, name):
         if self.scope.__contains__(name):
