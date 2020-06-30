@@ -1,5 +1,7 @@
 # ActualKutLang
 
+Created in cooperation with [Filip Zybała](https://github.com/pikinier20)
+
 Usage:
 ```python main.py program_path```
 ex. ```python main.py example.m```
